@@ -122,7 +122,7 @@ class ExtramemView extends DatarunpremiumView {
 		
 
 		var i = 0; 
-	    for (i = 1; i < 8; ++i) {
+	    for (i = 1; i < 5; ++i) {
 	        if (metric[i] == 14) {
     	        fieldValue[i] = Math.round(mETA).toNumber();
         	    fieldLabel[i] = "ETA";

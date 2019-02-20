@@ -32,7 +32,7 @@ class CiqView extends ExtramemView {
 		uCP		 	 	 = mApp.getProperty("pCP");
 		uspikeTreshold	 = mApp.getProperty("pspikeTreshold");
 		i = 0; 
-	    for (i = 1; i < 8; ++i) {		
+	    for (i = 1; i < 5; ++i) {		
 			if (metric[i] == 57 or metric[i] == 58 or metric[i] == 59) {
 				rolavPowmaxsecs = (rolavPowmaxsecs < 30) ? 30 : rolavPowmaxsecs;
 			}
@@ -134,7 +134,7 @@ class CiqView extends ExtramemView {
 		var mNormalizedPow = 0;
 		var rollingPwr30s = 0;
 		var j = 0; 		
-	    for (j = 1; j < 8; ++j) {
+	    for (j = 1; j < 5; ++j) {
 			if (metric[j] == 57 or metric[j] == 58 or metric[j] == 59) {
 
 				if (jTimertime > 30) {
@@ -160,7 +160,7 @@ class CiqView extends ExtramemView {
 		dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
 		
 		i = 0; 
-	    for (i = 1; i < 8; ++i) {
+	    for (i = 1; i < 5; ++i) {
 	        if (metric[i] == 38) {
     	        fieldValue[i] =  (info.currentPower != null) ? info.currentPower : 0;     	        
         	    fieldLabel[i] = "P zone";

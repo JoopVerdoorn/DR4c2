@@ -56,7 +56,7 @@ class PowerView extends CiqView {
 		var info = Activity.getActivityInfo();
 
         var i = 0; 
-	    for (i = 1; i < 8; ++i) {
+	    for (i = 1; i < 5; ++i) {
 	        if (metric[i] == 55) {   
             	fieldValue[i] = (info.currentSpeed != null or info.currentSpeed!=0) ? 100/info.currentSpeed : 0;
             	fieldLabel[i] = "s/100m";
@@ -92,7 +92,7 @@ class PowerView extends CiqView {
 
 
 		//! Display colored labels on screen
-		for (var i = 1; i < 8; ++i) {
+		for (var i = 1; i < 5; ++i) {
 		   	if ( i == 1 ) {			//!upper row, left    	
 	    		Coloring(dc,i,fieldValue[i],"018,029,100,019");
 		   	} else if ( i == 2 ) {	//!upper row, right
