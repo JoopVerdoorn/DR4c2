@@ -1,7 +1,7 @@
 <resources>
 
   <properties>
-    <property id="pAppversion" type="string">1.94</property>
+    <property id="pAppversion" type="string">1.95</property>
     <property id="pUpperLeftMetric" type="number">0</property>
     <property id="pUpperRightMetric" type="number">4</property>   
     <property id="pBottomLeftMetric" type="number">20</property>
@@ -39,8 +39,8 @@
     <!-- Beta name:
     <string id="AppName">Datarun premium with 4 metrics, copy 2</string>
     -->
-    <string id="AppVersion">1.94</string>
-    <string id="lDummysetting4version">Version 1.94 of Datarun premium with 4 metrics, copy 2 (dummy setting)</string>
+    <string id="AppVersion">1.95</string>
+    <string id="lDummysetting4version">Version 1.95 of Datarun premium with 4 metrics, copy 2 (dummy setting)</string>
 	<string id="lTimeMenu">___Time items___</string>
 	<string id="lDistanceMenu">___Distance items___</string>
 	<string id="lPaceMenu">___Pace items___</string>
@@ -180,6 +180,9 @@
       <settingConfig type="boolean" required="true" />
     </setting>
     <setting propertyKey="@Properties.myNumber" title="@Strings.MyNumberTitle">
+        <settingConfig type="numeric" errorMessage="@Strings.MyNumberError" />
+    </setting>
+    <setting propertyKey="@Properties.pCCnumber" title="@Strings.lCCnumber">
         <settingConfig type="numeric" errorMessage="@Strings.MyNumberError" />
     </setting>
     <setting propertyKey="@Properties.pRoundedPace" title="@Strings.lRoundedPace">
