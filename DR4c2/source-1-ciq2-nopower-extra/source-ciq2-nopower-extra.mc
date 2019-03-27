@@ -45,8 +45,12 @@ class CiqView extends ExtramemView {
         yl = yl.toNumber();
  
 		fieldvalue = (metric[counter]==46) ? HRzone : fieldvalue;
+		
         if ( fieldformat.equals("0decimal" ) == true ) {
-        	fieldvalue = fieldvalue.format("%.0f");        	
+        	fieldvalue = fieldvalue.format("%.0f");  
+        } else if ( fieldformat.equals("1decimal" ) == true ) {
+            Temp = Math.round(fieldvalue*10)/10;
+			fieldvalue = Temp.format("%.1f");
         } else if ( fieldformat.equals("2decimal" ) == true ) {
             Temp = Math.round(fieldvalue*100)/100;
             var fString = "%.2f";
@@ -59,19 +63,12 @@ class CiqView extends ExtramemView {
     	         	fString = "%.1f";
         	    }  
         	}        
-        	fieldvalue = Temp.format(fString);      	
+        	fieldvalue = Temp.format(fString);        	
         } else if ( fieldformat.equals("pace" ) == true ) {
         	Temp = (fieldvalue != 0 ) ? (unitP/fieldvalue).toLong() : 0;
         	fieldvalue = (Temp / 60).format("%0d") + ":" + Math.round(Temp % 60).format("%02d");
         } else if ( fieldformat.equals("power" ) == true ) {     
-        	fieldvalue = Math.round(fieldvalue);       	
-        	if (PowerWarning == 1) { 
-        		mColourFont = Graphics.COLOR_PURPLE;
-        	} else if (PowerWarning == 2) { 
-        		mColourFont = Graphics.COLOR_RED;
-        	} else if (PowerWarning == 0) { 
-        		mColourFont = originalFontcolor;
-        	}
+        	fieldvalue = Math.round(fieldvalue);
         } else if ( fieldformat.equals("timeshort" ) == true  ) {
         	Temp = (fieldvalue != 0 ) ? (fieldvalue).toLong() : 0;
         	fieldvalue = (Temp /60000 % 60).format("%02d") + ":" + (Temp /1000 % 60).format("%02d");
