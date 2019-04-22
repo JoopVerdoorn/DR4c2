@@ -54,7 +54,7 @@ class CiqView extends ExtramemView {
         } else if ( fieldformat.equals("2decimal" ) == true ) {
             Temp = Math.round(fieldvalue*100)/100;
             var fString = "%.2f";
-            if (counter == 3 or counter == 4 or counter ==5) {
+            if (counter == 1 or counter == 2 or counter ==3 or counter ==4) {
    	      		if (Temp > 9.99999) {
     	         	fString = "%.1f";
         	    }
