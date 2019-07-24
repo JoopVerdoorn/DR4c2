@@ -11,8 +11,6 @@ class ExtramemView extends DatarunpremiumView {
 	var rolavPacmaxsecs 					= 30;
 	var Averagespeedinmpersec 				= 0;
 	var uClockFieldMetric 					= 38; //! Powerzone is default
-	var mETA								= 0;
-	var uETAfromLap 						= true;
 	var HRzone								= 0;
 	hidden var Powerzone					= 0;
 	var VertPace1							= 0;
@@ -25,7 +23,6 @@ class ExtramemView extends DatarunpremiumView {
         DatarunpremiumView.initialize();
 		var mApp 		 = Application.getApp();
 		uClockFieldMetric = mApp.getProperty("pClockFieldMetric");
-		uETAfromLap		 = mApp.getProperty("pETAfromLap");
 		rolavPacmaxsecs  = mApp.getProperty("prolavPacmaxsecs");
 		uBlackBackground    = mApp.getProperty("pBlackBackground");
         uHrZones = UserProfile.getHeartRateZones(UserProfile.getCurrentSport());
@@ -53,6 +50,7 @@ class ExtramemView extends DatarunpremiumView {
 		//! Calculation of rolling average of pace
 		var info = Activity.getActivityInfo();
 		var zeroValueSecs = 0;
+
 		if (counterPace < 1) {
 			for (var i = 1; i < rolavPacmaxsecs+2; ++i) {
 				rollingPaceValue [i] = 0; 
@@ -89,23 +87,7 @@ class ExtramemView extends DatarunpremiumView {
         mRacemin = mRacemin.toNumber();
         mRacesec = mRacesec.toNumber();
         mRacetime = mRacehour*3600 + mRacemin*60 + mRacesec;
-		
-        //! Calculate ETA
-        if (info.elapsedDistance != null && info.timerTime != null) {
-            if (uETAfromLap == true ) {
-            	if (mLastLapTimerTime > 0 && mLastLapElapsedDistance > 0 && mLaps > 1) {
-            		if (uRacedistance > info.elapsedDistance) {
-            			mETA = info.timerTime/1000 + (uRacedistance - info.elapsedDistance)/ mLastLapSpeed;
-            		} else {
-            			mETA = 0;
-            		}
-            	}
-            } else {
-            	if (info.elapsedDistance > 5) {
-            		mETA = uRacedistance / (1000*info.elapsedDistance/info.timerTime);
-            	}
-            }
-        }
+	
         
 		//! Calculate vertical speed
 		var valueDesc = (info.totalDescent != null) ? info.totalDescent : 0;
@@ -123,22 +105,7 @@ class ExtramemView extends DatarunpremiumView {
 
 		var i = 0; 
 	    for (i = 1; i < 5; ++i) {
-	        if (metric[i] == 14) {
-    	        fieldValue[i] = Math.round(mETA).toNumber();
-        	    fieldLabel[i] = "ETA";
-            	fieldFormat[i] = "time";               	        	
-            } else if (metric[i] == 15) {
-        	    fieldLabel[i] = "Deviation";
-            	fieldFormat[i] = "time";
-	        	if ( mLaps == 1 ) {
-    	    		fieldValue[i] = 0;
-        		} else {
-        			fieldValue[i] = Math.round(mRacetime - mETA).toNumber() ;
-	        	}
-    	    	if (fieldValue[i] < 0) {
-        			fieldValue[i] = - fieldValue[i];
-        		}            	
-			} else if (metric[i] == 17) {
+	        if (metric[i] == 17) {
 	            fieldValue[i] = Averagespeedinmpersec;
     	        fieldLabel[i] = "Pc ..sec";
         	    fieldFormat[i] = "pace";  
@@ -426,13 +393,6 @@ class ExtramemView extends DatarunpremiumView {
 	       	dc.drawText(120, 13, Graphics.FONT_MEDIUM, CFMValue, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
     	    mColourFont = originalFontcolor;
 			dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
-		}
-		
-		if (jTimertime == 0) {
-        	var myTime = Toybox.System.getClockTime(); 
-	    	var strTime = myTime.hour.format("%02d") + ":" + myTime.min.format("%02d");
-	    	dc.setColor(Graphics.COLOR_RED, Graphics.COLOR_TRANSPARENT);
-			dc.drawText(120, 160, Graphics.FONT_MEDIUM, strTime, Graphics.TEXT_JUSTIFY_CENTER);
 		}
 	   }		
 	}

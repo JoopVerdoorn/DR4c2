@@ -1,8 +1,9 @@
 using Toybox.Graphics as Gfx;
+using Toybox.System as Sys;
 
 //! inherit from the view that contains the commonlogic
 class DeviceView extends PowerView {
-
+	
 	//! it's good practice to always have an initialize, make sure to call your parent class here!
     function initialize() {
         PowerView.initialize();
@@ -22,7 +23,7 @@ class DeviceView extends PowerView {
 	   //! Check whether demoscreen is showed or the metrics 
 	   if (uShowDemo == false ) {
 
-		//! Draw separator lines
+	//! Draw separator lines
         dc.setColor(mColourLine, Graphics.COLOR_TRANSPARENT);
         dc.setPenWidth(2);
         dc.drawLine(0, 109,  218, 109);
@@ -54,7 +55,16 @@ class DeviceView extends PowerView {
 	       	}     	
 		}
 
+		if (jTimertime == 0) {
+	    	if (ID0 != 3624 and ID0 != 3588 and ID0 != 3762 and ID0 != 3761 and ID0 != 3757 and ID0 != 3758 and ID0 != 3759) {
+		    	dc.setColor(Graphics.COLOR_RED, Graphics.COLOR_TRANSPARENT);
+				dc.drawText(109, 93, Graphics.FONT_MEDIUM, strTime, Graphics.TEXT_JUSTIFY_CENTER);
+		    }
+		}
+		
 		//! Bottom battery indicator
+	 	var stats = Sys.getSystemStats();
+		var pwr = stats.battery;
 		var mBattcolor = (pwr > 15) ? mColourFont : Graphics.COLOR_RED;
 		dc.setColor(mBattcolor, Graphics.COLOR_TRANSPARENT);
 		dc.fillRectangle(84, 197, 49, 14);
@@ -67,13 +77,13 @@ class DeviceView extends PowerView {
 		var Startstatuspwrbr = 85 + pwr*0.5  ;
 		var Endstatuspwrbr = 45 - pwr*0.5 ;
 		dc.fillRectangle(Startstatuspwrbr, 199, Endstatuspwrbr, 10);	
-
+		
 	   } else {
 	   //! Display demo screen
 		dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
 	
 		if (licenseOK == true) {
-      		dc.drawText(109, 36, Graphics.FONT_XTINY, "Datarun prem 4m c2", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
+      		dc.drawText(109, 36, Graphics.FONT_XTINY, "Datarun prem 7m c0", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
       		dc.drawText(109, 64, Graphics.FONT_XTINY, "Version " + appversion, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
 			dc.drawText(109, 109, Graphics.FONT_TINY, "Registered !!", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
 			dc.drawText(74, 145, Graphics.FONT_XTINY, "License code: ", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);

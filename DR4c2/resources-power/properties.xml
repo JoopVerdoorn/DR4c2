@@ -3,7 +3,7 @@
   <properties>
     <property id="pAppversion" type="string">2.08</property>
     <property id="pUpperLeftMetric" type="number">0</property>
-    <property id="pUpperRightMetric" type="number">4</property>   
+    <property id="pUpperRightMetric" type="number">4</property>    
     <property id="pBottomLeftMetric" type="number">20</property>
     <property id="pBottomRightMetric" type="number">22</property>
     <property id="pMilClockAltern" type="number">0</property>
@@ -13,9 +13,12 @@
     <property id="pBacklight" type="boolean">false</property>
     <property id="myNumber" type="number">12345678</property>
     <property id="pCCnumber" type="number">9999999</property>
-    <property id="pETAfromLap" type="boolean">true</property>
     <property id="pShowDemo" type="boolean">false</property>
     <property id="pDummysetting4version" type="boolean">true</property>
+    <property id="pRequiredPower" type="string">000:999</property>
+    <property id="pWarningFreq" type="number">5</property>
+    <property id="pAlertbeep" type="boolean">false</property>
+    <property id="pETAfromLap" type="boolean">true</property>
   </properties>
 
 	
@@ -57,13 +60,13 @@
     <string id="lLastLapPace">Last lap pace</string>
     <string id="lAltitude">Altitude</string>
 	<string id="lETArequiredpace">Required pace to meet required finish time</string>
-	<string id="lETAfromLap">Calculation of ETA based on elapsed time of last lap, instead of total average speed</string>
+	<string id="lETAfromLap">Calculation of ETA based on elapsed time of last lap</string>
     <string id="lETA">Estimated time of arrival</string>
     <string id="lETAfrompace">Estimated finished time based on average or last lap pace</string>
 	<string id="lETAdeviation">Deviation from required finish in hours, minutes and seconds</string>
 	
     <string id="lRoundedPace">Show current pace as Rounded Pace</string>
-
+   
     <string id="lShowDemo">Show demo view for ID's and check license</string>
     
     <string id="lBacklight">Force backlight on, regardless of device settings</string>
@@ -91,8 +94,16 @@
 	<string id="lLLSpeed">Last lap speed in km/mile per hour</string>
 	<string id="lAverageSpeed">Average speed in km/mile per hour</string>
 	<string id="lCadence">Cadence in steps per minute</string>
-	<string id="lCCnumber">C-Code generated on the watch by the corresponding main Datarun premium datafield</string>
 
+    <string id="lRequiredPower">Boundaries for warning signal, a format required like (227:284)</string> 
+    <string id="lWarningFreq">Frequency for the warning signal for operating out of powerzone</string>
+    <string id="lAlertbeep">Play sound as warning signal for operating out of powerzone</string>   
+    <string id="lSPower">Current running power</string>
+    <string id="lAsecPower">Power averaged over the last 3 seconds</string>
+    <string id="lAPower">Average running power</string>
+	<string id="lLPower">Current lap running power</string>
+	<string id="lLLPower">Last lap running power</string>
+	<string id="lCCnumber">C-Code generated on the watch by the corresponding main Datarun premium datafield</string>
  </strings>
 
   <settings>
@@ -107,7 +118,7 @@
     </setting>
     <setting propertyKey="@Properties.myNumber" title="@Strings.MyNumberTitle">
         <settingConfig type="numeric" errorMessage="@Strings.MyNumberError" />
-    </setting>
+    </setting>  
     <setting propertyKey="@Properties.pCCnumber" title="@Strings.lCCnumber">
         <settingConfig type="numeric" errorMessage="@Strings.MyNumberError" />
     </setting>
@@ -121,6 +132,15 @@
       <settingConfig type="alphaNumeric"  required="true"/>
     </setting>
     <setting propertyKey="@Properties.pETAfromLap" title="@Strings.lETAfromLap">
+      <settingConfig type="boolean" required="true" />
+    </setting>
+    <setting propertyKey="@Properties.pRequiredPower" title="@Strings.lRequiredPower">
+      <settingConfig type="alphaNumeric"  required="true"/>
+    </setting>   
+    <setting propertyKey="@Properties.pWarningFreq" title="@Strings.lWarningFreq">
+      <settingConfig type="numeric" />
+    </setting>    
+    <setting propertyKey="@Properties.pAlertbeep" title="@Strings.lAlertbeep">
       <settingConfig type="boolean" required="true" />
     </setting>
     <setting propertyKey="@Properties.pUpperLeftMetric" title="@Strings.lUpperLeftMetric">
@@ -164,6 +184,13 @@
         <listEntry value="48">@Strings.lLLHeartrate</listEntry>
         <listEntry value="49">@Strings.lAveraHeartrate</listEntry>
                 
+        <listEntry value="996">@Strings.lSPowerMenu</listEntry>
+        <listEntry value="20">@Strings.lSPower</listEntry>
+        <listEntry value="21">@Strings.lAsecPower</listEntry>
+        <listEntry value="22">@Strings.lLPower</listEntry>
+        <listEntry value="23">@Strings.lLLPower</listEntry>
+        <listEntry value="24">@Strings.lAPower</listEntry>
+        
         <listEntry value="998">@Strings.lAltitudeMenu</listEntry>
         <listEntry value="51">@Strings.lAltitude</listEntry>
       </settingConfig>
@@ -192,7 +219,8 @@
         <listEntry value="50">@Strings.lCadence</listEntry>
         
         <listEntry value="993">@Strings.lETAMenu</listEntry>
-        <listEntry value="13">@Strings.lETArequiredpace</listEntry><listEntry value="14">@Strings.lETA</listEntry>
+        <listEntry value="13">@Strings.lETArequiredpace</listEntry>
+        <listEntry value="14">@Strings.lETA</listEntry>
         <listEntry value="15">@Strings.lETAdeviation</listEntry>
 
         <listEntry value="994">@Strings.lSpeedMenu</listEntry>
@@ -208,11 +236,18 @@
         <listEntry value="48">@Strings.lLLHeartrate</listEntry>
         <listEntry value="49">@Strings.lAveraHeartrate</listEntry>
                 
+        <listEntry value="996">@Strings.lSPowerMenu</listEntry>
+        <listEntry value="20">@Strings.lSPower</listEntry>
+        <listEntry value="21">@Strings.lAsecPower</listEntry>
+        <listEntry value="22">@Strings.lLPower</listEntry>
+        <listEntry value="23">@Strings.lLLPower</listEntry>
+        <listEntry value="24">@Strings.lAPower</listEntry>
+        
         <listEntry value="998">@Strings.lAltitudeMenu</listEntry>
         <listEntry value="51">@Strings.lAltitude</listEntry>
       </settingConfig>
     </setting>
-    
+
     <setting propertyKey="@Properties.pBottomLeftMetric" title="@Strings.lBottomLeftMetric">
       <settingConfig type="list" required="true">
         <listEntry value="990">@Strings.lTimeMenu</listEntry>
@@ -254,6 +289,13 @@
         <listEntry value="48">@Strings.lLLHeartrate</listEntry>
         <listEntry value="49">@Strings.lAveraHeartrate</listEntry>
                 
+        <listEntry value="996">@Strings.lSPowerMenu</listEntry>
+        <listEntry value="20">@Strings.lSPower</listEntry>
+        <listEntry value="21">@Strings.lAsecPower</listEntry>
+        <listEntry value="22">@Strings.lLPower</listEntry>
+        <listEntry value="23">@Strings.lLLPower</listEntry>
+        <listEntry value="24">@Strings.lAPower</listEntry>
+        
         <listEntry value="998">@Strings.lAltitudeMenu</listEntry>
         <listEntry value="51">@Strings.lAltitude</listEntry>
       </settingConfig>
@@ -299,6 +341,13 @@
         <listEntry value="48">@Strings.lLLHeartrate</listEntry>
         <listEntry value="49">@Strings.lAveraHeartrate</listEntry>
                 
+        <listEntry value="996">@Strings.lSPowerMenu</listEntry>
+        <listEntry value="20">@Strings.lSPower</listEntry>
+        <listEntry value="21">@Strings.lAsecPower</listEntry>
+        <listEntry value="22">@Strings.lLPower</listEntry>
+        <listEntry value="23">@Strings.lLLPower</listEntry>
+        <listEntry value="24">@Strings.lAPower</listEntry>
+        
         <listEntry value="998">@Strings.lAltitudeMenu</listEntry>
         <listEntry value="51">@Strings.lAltitude</listEntry>
        </settingConfig>

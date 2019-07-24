@@ -1,4 +1,5 @@
 using Toybox.Math;
+using Toybox.WatchUi as Ui;
 class CiqView extends ExtramemView {  
 	var mfillColour 						= Graphics.COLOR_LT_GRAY;
 	var counterPower 						= 0;
@@ -16,10 +17,11 @@ class CiqView extends ExtramemView {
 	var mIntensityFactor					= 0;
 	var mTTS								= 0;
 	var i 									= 0;
-	var uspikeTreshold						= 2000;
 	var runPower							= 0;
 	var lastsrunPower						= 0;
 	var setPowerWarning 					= 0;
+	var Garminfont = Ui.loadResource(Rez.Fonts.Garmin1);
+	var Garminfontklein = Ui.loadResource(Rez.Fonts.Garmin2);
 		
     function initialize() {
         ExtramemView.initialize();
@@ -30,13 +32,13 @@ class CiqView extends ExtramemView {
 		uPower10Zones	 = mApp.getProperty("pPPPowerZones");
 		uFTP		 	 = mApp.getProperty("pFTP");
 		uCP		 	 	 = mApp.getProperty("pCP");
-		uspikeTreshold	 = mApp.getProperty("pspikeTreshold");
 		i = 0; 
 	    for (i = 1; i < 5; ++i) {		
 			if (metric[i] == 57 or metric[i] == 58 or metric[i] == 59) {
 				rolavPowmaxsecs = (rolavPowmaxsecs < 30) ? 30 : rolavPowmaxsecs;
 			}
-		}			
+		}	
+		Garminfont = (ID0 == 3624 or ID0 == 3588 or ID0 == 3762 or ID0 == 3761 or ID0 == 3757 or ID0 == 3758 or ID0 == 3759) ? Ui.loadResource(Rez.Fonts.Garmin1) : Graphics.FONT_NUMBER_HOT;		
     }
 
     //! Calculations we need to do every second even when the data field is not visible
@@ -52,10 +54,8 @@ class CiqView extends ExtramemView {
             mHeartrateTime	 = (info.currentHeartRate != null) ? mHeartrateTime+1 : mHeartrateTime;				
            	mElapsedHeartrate= (info.currentHeartRate != null) ? mElapsedHeartrate + info.currentHeartRate : mElapsedHeartrate;
             //!Calculate lappower
-            mPowerTime		 = (info.currentPower != null) ? mPowerTime+1 : mPowerTime;
-//!temporary solution for power spikes > spikeTreshold Watt 		
+            mPowerTime		 = (info.currentPower != null) ? mPowerTime+1 : mPowerTime; 		
             runPower 		 = (info.currentPower != null) ? info.currentPower : 0;
-            runPower 		 = (runPower > uspikeTreshold) ? lastsrunPower : runPower;
 			mElapsedPower    = mElapsedPower + runPower;
 			lastsrunPower 	 = runPower;
 			RSS 			 = (info.currentPower != null) ? RSS + 0.03 * Math.pow(((runPower+0.001)/uCP),3.5) : RSS; 			             
@@ -110,8 +110,6 @@ class CiqView extends ExtramemView {
 		}
 		counterPower = counterPower + 1;
 		rollingPwrValue [rolavPowmaxsecs+1] = (info.currentPower != null) ? info.currentPower : 0;
-//!temporary solution for power spikes > spikeTreshold Wat 		
-		rollingPwrValue [rolavPowmaxsecs+1] = (rollingPwrValue [rolavPowmaxsecs+1] > uspikeTreshold) ? rollingPwrValue [rolavPowmaxsecs] : rollingPwrValue [rolavPowmaxsecs+1];
 		FilteredCurPower = rollingPwrValue [rolavPowmaxsecs+1]; 
 		for (var i = 1; i < rolavPowmaxsecs+1; ++i) {
 			rollingPwrValue[i] = rollingPwrValue[i+1];
@@ -134,7 +132,7 @@ class CiqView extends ExtramemView {
 		var mNormalizedPow = 0;
 		var rollingPwr30s = 0;
 		var j = 0; 		
-	    for (j = 1; j < 5; ++j) {
+	    for (j = 1; j < 8; ++j) {
 			if (metric[j] == 57 or metric[j] == 58 or metric[j] == 59) {
 
 				if (jTimertime > 30) {
@@ -164,11 +162,7 @@ class CiqView extends ExtramemView {
 	        if (metric[i] == 38) {
     	        fieldValue[i] =  (info.currentPower != null) ? info.currentPower : 0;     	        
         	    fieldLabel[i] = "P zone";
-            	fieldFormat[i] = "1decimal";
-			} else if (metric[i] == 56) {
-	            fieldValue[i] = FilteredCurPower;
-    	        fieldLabel[i] = "Filt Pwr";
-        	    fieldFormat[i] = "0decimal";            	
+            	fieldFormat[i] = "1decimal";          	
 			} else if (metric[i] == 17) {
 	            fieldValue[i] = Averagespeedinmpersec;
     	        fieldLabel[i] = "Pc ..sec";
@@ -275,7 +269,7 @@ class CiqView extends ExtramemView {
         } else if ( fieldformat.equals("2decimal" ) == true ) {
             Temp = Math.round(fieldvalue*100)/100;
             var fString = "%.2f";
-            if (counter == 1 or counter == 2 or counter ==3 or counter ==4) {
+            if ( counter == 1 or counter == 2 or counter == 3 or counter == 4 ) {
    	      		if (Temp > 9.99999) {
     	         	fString = "%.1f";
         	    }
@@ -314,13 +308,13 @@ class CiqView extends ExtramemView {
 	    		if (fieldvalue > 3599) {
             		var fTimerHours = (fieldvalue / 3600).format("%d");
             		xx = xms;
-            		dc.drawText(xh, yh, Graphics.FONT_NUMBER_MILD, fTimerHours, Graphics.TEXT_JUSTIFY_LEFT|Graphics.TEXT_JUSTIFY_VCENTER);
+            		dc.drawText(xh, yh, Graphics.FONT_LARGE, fTimerHours, Graphics.TEXT_JUSTIFY_LEFT|Graphics.TEXT_JUSTIFY_VCENTER);
             		fTimer = (fieldvalue / 60 % 60).format("%02d") + ":" + fTimerSecs;  
         		}
-       			dc.drawText(xx, y, Graphics.FONT_NUMBER_MEDIUM, fTimer, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
+       			dc.drawText(xx, y, Garminfontklein, fTimer, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
         	}
         } else {
-       		dc.drawText(x, y, Graphics.FONT_NUMBER_HOT, fieldvalue, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
+       		dc.drawText(x, y, Garminfont, fieldvalue, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
         }        
        	dc.drawText(xl, yl, Graphics.FONT_XTINY,  fieldlabel, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
         mColourFont = originalFontcolor;

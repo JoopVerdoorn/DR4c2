@@ -23,8 +23,10 @@ class CiqView extends DatarunpremiumView {
         }
 	}
 
+
 	function onUpdate(dc) {
 		DatarunpremiumView.onUpdate(dc);
+		uMilClockAltern=0;
 		
     	//! Setup back- and foregroundcolours
 		mColourFont = (getBackgroundColor() == Graphics.COLOR_BLACK) ? Graphics.COLOR_WHITE : Graphics.COLOR_BLACK; 
@@ -56,7 +58,7 @@ class CiqView extends DatarunpremiumView {
         } else if ( fieldformat.equals("2decimal" ) == true ) {
             Temp = Math.round(fieldvalue*100)/100;
             var fString = "%.2f";
-            if (counter == 1 or counter == 2 or counter ==3 or counter ==4) {
+            if ( counter == 1 or counter == 2 or counter == 3 or counter == 4 ) {
    	      		if (Temp > 9.99999) {
     	         	fString = "%.1f";
         	    }
@@ -94,7 +96,7 @@ class CiqView extends DatarunpremiumView {
 	    		if (fieldvalue > 3599) {
             		var fTimerHours = (fieldvalue / 3600).format("%d");
             		xx = xms;
-            		dc.drawText(xh, yh, Graphics.FONT_NUMBER_MILD, fTimerHours, Graphics.TEXT_JUSTIFY_LEFT|Graphics.TEXT_JUSTIFY_VCENTER);
+            		dc.drawText(xh, yh, Graphics.FONT_LARGE, fTimerHours, Graphics.TEXT_JUSTIFY_LEFT|Graphics.TEXT_JUSTIFY_VCENTER);
             		fTimer = (fieldvalue / 60 % 60).format("%02d") + ":" + fTimerSecs;  
         		}
         		dc.drawText(xx, y, Graphics.FONT_NUMBER_MEDIUM, fTimer, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);	
