@@ -33,14 +33,14 @@ class DeviceView extends PowerView {
         dc.setColor(mColourLine, Graphics.COLOR_TRANSPARENT);
         dc.setPenWidth(2);
 
-        dc.drawLine(0, 120,  240, 120);
-        dc.drawLine(120, 29,  120, 214);
+        dc.drawLine(0, 140,  280, 140);
+        dc.drawLine(140, 34,  140, 250);
 
         //! Bottom horizontal divider
-        dc.drawLine(45, 214, 195, 214);
+        dc.drawLine(50, 250, 240, 250);
 
         //! Top horizontal divider
-        dc.drawLine(33, 29, 207, 29);	
+        dc.drawLine(39, 34, 242, 34);	
 
 		//! Display metrics
         dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
@@ -49,40 +49,40 @@ class DeviceView extends PowerView {
 		myTime = Toybox.System.getClockTime(); 
 	    strTime = myTime.hour.format("%02d") + ":" + myTime.min.format("%02d");
 		if (uMilClockAltern == 0) {		
-			dc.drawText(120, -4, Graphics.FONT_MEDIUM, strTime, Graphics.TEXT_JUSTIFY_CENTER);
+			dc.drawText(140, -2, Graphics.FONT_MEDIUM, strTime, Graphics.TEXT_JUSTIFY_CENTER);
 		}
 
 		for (var i = 1; i < 5; ++i) {
 	    	if ( i == 1 ) {			//!upper row, left
-	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"062,085,072,012,099,073,041");
+	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"072,099,084,015,109,085,048");
 	       	} else if ( i == 2 ) {	//!upper row, right
-	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"173,085,182,123,099,167,041");
+	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"202,099,215,147,109,195,048");
 	       	} else if ( i == 3 ) {  //!lower row, left
-	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"062,153,072,012,145,073,199");
+	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"072,177,084,015,170,085,232");
 	       	} else if ( i == 4 ) {	//!lower row, right
-	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"173,153,182,123,167,167,199");
+	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"202,177,215,147,187,195,232");
 	       	}    	       	 	
 		}
 		
-		if (jTimertime == 0) {
-	    	if (ID0 != 3624 and ID0 != 3588 and ID0 != 3762 and ID0 != 3761 and ID0 != 3757 and ID0 != 3758 and ID0 != 3759) {
-		    	dc.setColor(Graphics.COLOR_RED, Graphics.COLOR_TRANSPARENT);
-				dc.drawText(120, 102, Graphics.FONT_MEDIUM, strTime, Graphics.TEXT_JUSTIFY_CENTER);
-		    }
-		}
+//!		if (jTimertime == 0) {
+//!	    	if (ID0 != 3624 and ID0 != 3588 and ID0 != 3762 and ID0 != 3761 and ID0 != 3757 and ID0 != 3758 and ID0 != 3759) {
+//!		    	dc.setColor(Graphics.COLOR_RED, Graphics.COLOR_TRANSPARENT);
+//!				dc.drawText(120, 102, Graphics.FONT_MEDIUM, strTime, Graphics.TEXT_JUSTIFY_CENTER);
+//!		    }
+//!		}
 		
 		//! Bottom battery indicator
 	 	var stats = Sys.getSystemStats();
 		var pwr = stats.battery;
 		var mBattcolor = (pwr > 15) ? mColourFont : Graphics.COLOR_RED;
 		dc.setColor(mBattcolor, Graphics.COLOR_TRANSPARENT);
-		dc.fillRectangle(92, 219, 54, 15);
-		dc.fillRectangle(146, 222, 3, 8);
-		
+		dc.fillRectangle(107, 255, 63, 18);
+		dc.fillRectangle(170, 260, 4, 8);
+
 		dc.setColor(mColourBackGround, Graphics.COLOR_TRANSPARENT);
-		var Startstatuspwrbr = 94 + pwr*0.5  ;
-		var Endstatuspwrbr = 50 - pwr*0.5 ;
-		dc.fillRectangle(Startstatuspwrbr, 221, Endstatuspwrbr, 11);	
+		var Startstatuspwrbr = 110 + Math.round(pwr*0.58)  ;
+		var Endstatuspwrbr = 58 - Math.round(pwr*0.58) ;
+		dc.fillRectangle(Startstatuspwrbr, 257, Endstatuspwrbr, 14);		
 		
 	   } else {
 	   //! Display demo screen

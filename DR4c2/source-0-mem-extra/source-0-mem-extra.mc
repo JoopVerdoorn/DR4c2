@@ -18,6 +18,15 @@ class ExtramemView extends DatarunpremiumView {
 	var VertPace3							= 0;
 	var VertPace4							= 0;
 	var VertPace5							= 0;
+	var disablelabel1 						= false;
+	var disablelabel2 						= false;
+	var disablelabel3 						= false;
+	var disablelabel4 						= false;
+	var disablelabel5 						= false;
+	var disablelabel6 						= false;
+	var disablelabel7 						= false;
+	var maxHR								= 999;
+	var kCalories							= 0;
 	
     function initialize() {
         DatarunpremiumView.initialize();
@@ -26,6 +35,10 @@ class ExtramemView extends DatarunpremiumView {
 		rolavPacmaxsecs  = mApp.getProperty("prolavPacmaxsecs");
 		uBlackBackground    = mApp.getProperty("pBlackBackground");
         uHrZones = UserProfile.getHeartRateZones(UserProfile.getCurrentSport());
+        disablelabel1 						= mApp.getProperty("pdisablelabel1");
+		disablelabel2 						= mApp.getProperty("pdisablelabel2");
+		disablelabel3 						= mApp.getProperty("pdisablelabel3");
+		disablelabel4 						= mApp.getProperty("pdisablelabel4");
     }
 
 	function onUpdate(dc) {
@@ -45,7 +58,7 @@ class ExtramemView extends DatarunpremiumView {
 			mColourBackGround = Graphics.COLOR_WHITE;
 		}
 		dc.setColor(mColourBackGround, Graphics.COLOR_TRANSPARENT);
-        dc.fillRectangle (0, 0, 240, 240);
+        dc.fillRectangle (0, 0, 280, 280);
        
 		//! Calculation of rolling average of pace
 		var info = Activity.getActivityInfo();
@@ -102,13 +115,25 @@ class ExtramemView extends DatarunpremiumView {
         VertPace1								= CurrentVertSpeedinmpersec; 
 		var AverageVertspeedinmper5sec= (VertPace1+VertPace2+VertPace3+VertPace4+VertPace5)/5;
 		
-
+		maxHR = uHrZones[5];
 		var i = 0; 
 	    for (i = 1; i < 5; ++i) {
 	        if (metric[i] == 17) {
 	            fieldValue[i] = Averagespeedinmpersec;
     	        fieldLabel[i] = "Pc ..sec";
         	    fieldFormat[i] = "pace";  
+        	} else if (metric[i] == 81) {
+	        	if (Toybox.Activity.Info has :distanceToNextPoint) {
+    	        	fieldValue[i] = (info.distanceToNextPoint != null) ? info.distanceToNextPoint / unitD : 0;
+    	        }
+        	    fieldLabel[i] = "DistNext";
+            	fieldFormat[i] = "2decimal";
+			} else if (metric[i] == 82) {
+    	        if (Toybox.Activity.Info has :distanceToDestination) {
+    	        	fieldValue[i] = (info.distanceToDestination != null) ? info.distanceToNextPoint / unitD : 0;
+    	        }
+        	    fieldLabel[i] = "DistDest";
+            	fieldFormat[i] = "2decimal";
 	        } else if (metric[i] == 28) {
     	        fieldValue[i] = LapEfficiencyFactor;
         	    fieldLabel[i] = "Lap EF";
@@ -157,6 +182,34 @@ class ExtramemView extends DatarunpremiumView {
            		fieldValue[i] = (unitD == 1609.344) ? AverageVertspeedinmper5sec*3.2808 : AverageVertspeedinmper5sec;
             	fieldLabel[i] = "V speed";
             	fieldFormat[i] = "1decimal";
+            } else if (metric[i] == 83) {
+            	fieldValue[i] = (maxHR != 0) ? currentHR*100/maxHR : 0;
+            	fieldLabel[i] = "%MaxHR";
+            	fieldFormat[i] = "0decimal";   
+			} else if (metric[i] == 84) {
+    	        fieldValue[i] = (maxHR != 0) ? LapHeartrate*100/maxHR : 0;
+        	    fieldLabel[i] = "L %MaxHR";
+            	fieldFormat[i] = "0decimal";
+			} else if (metric[i] == 85) {
+        	    fieldValue[i] = (maxHR != 0) ? LastLapHeartrate*100/maxHR : 0;
+            	fieldLabel[i] = "LL %MaxHR";
+            	fieldFormat[i] = "0decimal";
+	        } else if (metric[i] == 86) {
+    	        fieldValue[i] = (maxHR != 0) ? AverageHeartrate*100/maxHR : 0;
+        	    fieldLabel[i] = "A %MaxHR";
+            	fieldFormat[i] = "0decimal";  
+			} else if (metric[i] == 88) {   
+            	if (mLastLapSpeed == null or info.currentSpeed==0) {
+            		fieldValue[i] = 0;
+            	} else {
+            		fieldValue[i] = (mLastLapSpeed > 0.001) ? 100/mLastLapSpeed : 0;
+            	}
+            	fieldLabel[i] = "LL s/100m";
+        	    fieldFormat[i] = "1decimal";
+	        } else if (metric[i] == 87) {
+    	        fieldValue[i] = (info.calories != null) ? info.calories : 0;
+        	    fieldLabel[i] = "kCal";
+            	fieldFormat[i] = "0decimal";
 			} 
 		}
 
@@ -314,6 +367,10 @@ class ExtramemView extends DatarunpremiumView {
            		CFMValue = (unitD == 1609.344) ? AverageVertspeedinmper5sec*3.2808 : AverageVertspeedinmper5sec;
             	CFMLabel = "V speed";
             	CFMFormat = "2decimal";  
+            } else if (metric[i] == 87) {
+    	        fieldValue[i] = (info.calories != null) ? info.calories : 0;
+        	    fieldLabel[i] = "kCal";
+            	fieldFormat[i] = "0decimal";
 			}
 			 
 
@@ -327,24 +384,82 @@ class ExtramemView extends DatarunpremiumView {
 	   //! Check whether demoscreen is showed or the metrics 
 	   if (uShowDemo == false ) {
 
-		//! Display colored labels on screen
-		for (var i = 1; i < 5; ++i) {
-		   	if ( i == 1 ) {			//!upper row, left    	
-	    		Coloring(dc,i,fieldValue[i],"020,029,100,025");
-		   	} else if ( i == 2 ) {	//!upper row, right
-		   		Coloring(dc,i,fieldValue[i],"120,029,100,025");
-	       	} else if ( i == 3 ) {  //!lower row, left
-	    		Coloring(dc,i,fieldValue[i],"020,188,100,026");
-		   	} else if ( i == 4 ) {	//!lower row, middle
-		 		Coloring(dc,i,fieldValue[i],"120,188,100,026");
-	    	}       	
+		//! Display colored labels on screen	
+		if (ID0 == 3801 or ID0 == 4026 ) {  //! Fenix 6 pro labels
+			for (var i = 1; i < 8; ++i) {
+			   	if ( i == 1 ) {			//!upper row, left    	
+	    			if (disablelabel1 == false) {
+	    				Coloring(dc,i,fieldValue[i],"022,031,108,027");
+	    			}
+		   		} else if ( i == 2 ) {	//!upper row, right
+			   		if (disablelabel2 == false) {
+			   			Coloring(dc,i,fieldValue[i],"130,031,108,027");
+			   		}
+		       	} else if ( i == 3 ) {  //!lower row, left
+	    			if (disablelabel3 == false) {
+	    				Coloring(dc,i,fieldValue[i],"022,204,108,028");
+	    			}
+		   		} else if ( i == 4 ) {	//!lower row, middle
+		 			if (disablelabel4 == false) {
+		 				Coloring(dc,i,fieldValue[i],"130,204,108,028");
+		 			}
+		    	}       	
+			}		
+		} else if (ID0 == 3802 or ID0 == 4027 ) {     //! Fenix 6x pro labels
+			for (var i = 1; i < 8; ++i) {
+			   	if ( i == 1 ) {			//!upper row, left    	
+	    			if (disablelabel1 == false) {
+	    				Coloring(dc,i,fieldValue[i],"023,034,117,029");
+	    			}
+		   		} else if ( i == 2 ) {	//!upper row, right
+			   		if (disablelabel2 == false) {
+			   			Coloring(dc,i,fieldValue[i],"140,034,117,029");
+			   		}
+		       	} else if ( i == 3 ) {  //!lower row, left
+	    			if (disablelabel3 == false) {
+	    				Coloring(dc,i,fieldValue[i],"023,219,117,030");
+	    			}
+		   		} else if ( i == 4 ) {	//!lower row, middle
+		 			if (disablelabel4 == false) {
+		 				Coloring(dc,i,fieldValue[i],"140,219,117,030");
+		 			}
+		    	}  	
+			}	
+		} else {
+			for (var i = 1; i < 5; ++i) {
+			   	if ( i == 1 ) {			//!upper row, left    	
+	    			if (disablelabel1 == false) {
+	    				Coloring(dc,i,fieldValue[i],"020,029,100,025");
+	    			}
+		   		} else if ( i == 2 ) {	//!upper row, right
+			   		if (disablelabel2 == false) {
+			   			Coloring(dc,i,fieldValue[i],"120,029,100,025");
+			   		}
+		       	} else if ( i == 3 ) {  //!lower row, left
+	    			if (disablelabel3 == false) {
+	    				Coloring(dc,i,fieldValue[i],"020,188,100,026");
+	    			}
+		   		} else if ( i == 4 ) {	//!lower row, middle
+		 			if (disablelabel4 == false) {
+		 				Coloring(dc,i,fieldValue[i],"120,188,100,026");
+		 			}
+		    	}       	
+			}
 		}
-
+		
 		//! Show number of laps or clock with current time in top
 		dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
 		if (uMilClockAltern == 2) { //! Show number of laps 
-			 dc.drawText(103, -4, Graphics.FONT_MEDIUM, mLaps, Graphics.TEXT_JUSTIFY_CENTER);
-			 dc.drawText(140, -1, Graphics.FONT_XTINY, "lap", Graphics.TEXT_JUSTIFY_CENTER);
+			if (ID0 == 3801 or ID0 == 4026 ) {
+				 dc.drawText(113, -3, Graphics.FONT_MEDIUM, mLaps, Graphics.TEXT_JUSTIFY_CENTER);
+				 dc.drawText(150, -1, Graphics.FONT_XTINY, "lap", Graphics.TEXT_JUSTIFY_CENTER);
+			} else if (ID0 == 3802 or ID0 == 4027 ) {
+				 dc.drawText(123, -2, Graphics.FONT_MEDIUM, mLaps, Graphics.TEXT_JUSTIFY_CENTER);
+				 dc.drawText(160, -1, Graphics.FONT_XTINY, "lap", Graphics.TEXT_JUSTIFY_CENTER);		
+			} else {	
+				 dc.drawText(103, -4, Graphics.FONT_MEDIUM, mLaps, Graphics.TEXT_JUSTIFY_CENTER);
+				 dc.drawText(140, -1, Graphics.FONT_XTINY, "lap", Graphics.TEXT_JUSTIFY_CENTER);
+			}
 		} else if (uMilClockAltern == 1) {	//! Show clock with AM and PM 	
 			var myTime = Toybox.System.getClockTime(); 
 			var AmPmhour = myTime.hour.format("%02d");
@@ -355,7 +470,13 @@ class ExtramemView extends DatarunpremiumView {
 				AmPmhour = AmPmhour - 12;
 			}
 	    	var strTime = AmPmhour + ":" + myTime.min.format("%02d") + " " + AmPm;
-			dc.drawText(130, -4, Graphics.FONT_MEDIUM, strTime, Graphics.TEXT_JUSTIFY_CENTER);
+	    	if (ID0 == 3801 or ID0 == 4026 ) {
+				dc.drawText(140, -3, Graphics.FONT_MEDIUM, strTime, Graphics.TEXT_JUSTIFY_CENTER);
+	    	} else if (ID0 == 3802 or ID0 == 4027 ) {
+				dc.drawText(150, -2, Graphics.FONT_MEDIUM, strTime, Graphics.TEXT_JUSTIFY_CENTER);
+	    	} else {
+				dc.drawText(130, -4, Graphics.FONT_MEDIUM, strTime, Graphics.TEXT_JUSTIFY_CENTER);
+			}
 		} else if (uMilClockAltern == 3) {		//! Display of metric in Clock field
 			var originalFontcolor = mColourFont;
 			var Temp;
@@ -390,7 +511,13 @@ class ExtramemView extends DatarunpremiumView {
         		CFMValue = (Temp /60000 % 60).format("%02d") + ":" + (Temp /1000 % 60).format("%02d");
 	        }
 	    	dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
-	       	dc.drawText(120, 13, Graphics.FONT_MEDIUM, CFMValue, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
+	    	if (ID0 == 3801 or ID0 == 4026 ) {
+	    	   	dc.drawText(130, 14, Graphics.FONT_MEDIUM, CFMValue, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
+	    	} else if (ID0 == 3802 or ID0 == 4027 ) {
+	    	   	dc.drawText(140, 15, Graphics.FONT_MEDIUM, CFMValue, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
+	       	} else {
+		       	dc.drawText(120, 13, Graphics.FONT_MEDIUM, CFMValue, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
+    	    }
     	    mColourFont = originalFontcolor;
 			dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
 		}
@@ -428,7 +555,7 @@ class ExtramemView extends DatarunpremiumView {
             mZ4under = 174;
             mZ5under = 183;
             mZ5upper = 300; 
-        } else if (metric[counter] == 20 or metric[counter] == 21 or metric[counter] == 22 or metric[counter] == 23 or metric[counter] == 24 or metric[counter] == 37 or metric[counter] == 38) {  //! Power=20, Powerzone=38, Pwr 5s=21, L Power=22, L-1 Pwr=23, A Power=24
+        } else if (metric[counter] == 20 or metric[counter] == 21 or metric[counter] == 22 or metric[counter] == 23 or metric[counter] == 24 or metric[counter] == 37 or metric[counter] == 38 or metric[counter] == 70 or metric[counter] == 39 or metric[counter] == 80) {  //! Power=20, Powerzone=38, Pwr 5s=21, L Power=22, L-1 Pwr=23, A Power=24
         	mZ1under = uPowerZones.substring(0, 3);
         	mZ2under = uPowerZones.substring(7, 10);
         	mZ3under = uPowerZones.substring(14, 17);
