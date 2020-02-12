@@ -1,7 +1,7 @@
 <resources>
 
   <properties>
-    <property id="pAppversion" type="string">2.20d</property>
+    <property id="pAppversion" type="string">2.23b</property>
     <property id="pUpperLeftMetric" type="number">0</property>
     <property id="pUpperRightMetric" type="number">4</property>   
     <property id="pBottomLeftMetric" type="number">20</property>
@@ -14,18 +14,20 @@
     <property id="myNumber" type="number">12345678</property>
     <property id="pETAfromLap" type="boolean">true</property>
     <property id="pShowDemo" type="boolean">false</property>
+    <property id="pCCnumber" type="number">9999999</property>
     <property id="pDummysetting4version" type="boolean">true</property>
   </properties>
 
 	
   <strings>
     <!-- Release name: -->
-    <string id="AppName">Datarun premium with 4 metrics, main version</string>
+    <string id="AppName">Datarun premium with 4 metrics, copy 2 version</string>
     <!-- Beta name:
-    <string id="AppName">Datarun premium with 4 metrics, main version</string>
+    <string id="AppName">Datarun premium with 4 metrics, copy 2 version</string>
     -->
-    <string id="AppVersion">2.20d</string>
-    <string id="lDummysetting4version">Version 2.20d of Datarun premium with 4 metrics, main version (dummy setting)</string>
+    <string id="AppVersion">2.23b</string>
+    <string id="lCCnumber">C-Code generated on the watch by the corresponding main Datarun premium datafield</string>
+    <string id="lDummysetting4version">Version 2.23b of Datarun premium with 4 metrics, copy 2 version (dummy setting)</string>
 	<string id="lTimeMenu">___Time items___</string>
 	<string id="lDistanceMenu">___Distance items___</string>
 	<string id="lPaceMenu">___Pace items___</string>
@@ -68,8 +70,7 @@
     <string id="lBacklight">Force backlight on, regardless of device settings</string>
     
     <string id="MyNumberTitle">Enter license key</string>
-    <string id="MyNumberError">Not valid, only numbers allowed!</string>
-    <string id="lCCnumber">C-Code generated on the watch by the corresponding main Datarun premium datafield</string> 
+    <string id="MyNumberError">Not valid, only numbers allowed!</string> 
     <string id="lRacedistanceTitle">Enter race distance in meters or thousands of a mile (imperial/statute watch settings) for estimated finish time</string>
     <string id="lRacedistanceError">Not valid, only numbers allowed!</string>
     <string id="lRacetimeTitle">Enter desired finish time(format like 03:59:00 required!)</string>
@@ -90,7 +91,6 @@
 	<string id="lLLSpeed">Last lap speed in km/mile per hour</string>
 	<string id="lAverageSpeed">Average speed in km/mile per hour</string>
 	<string id="lCadence">Cadence in steps per minute</string>
-    
  </strings>
 
   <settings>
@@ -106,6 +106,10 @@
     <setting propertyKey="@Properties.myNumber" title="@Strings.MyNumberTitle">
         <settingConfig type="numeric" errorMessage="@Strings.MyNumberError" />
     </setting>
+    <setting propertyKey="@Properties.pCCnumber" title="@Strings.lCCnumber">
+        <settingConfig type="numeric" errorMessage="@Strings.MyNumberError" />
+    </setting>
+    
     <setting propertyKey="@Properties.pRoundedPace" title="@Strings.lRoundedPace">
       <settingConfig type="boolean" required="true" />
     </setting>

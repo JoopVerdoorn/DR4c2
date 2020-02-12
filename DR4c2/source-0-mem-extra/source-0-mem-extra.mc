@@ -1,9 +1,13 @@
+using Toybox.SensorHistory;
+using Toybox.Lang;
+using Toybox.System;
+
 class ExtramemView extends DatarunpremiumView {   
 	hidden var uHrZones   			        = [ 93, 111, 130, 148, 167, 185 ];	
 	hidden var uPowerZones                  = "184:Z1:227:Z2:255:Z3:284:Z4:326:Z5:369";
 	hidden var uPower10Zones				= "180:Z1:210:Z2:240:Z3:270:Z4:300:Z5:330:Z6:360:Z7:390:Z8:420:Z9:450:Z10:480";
 	hidden var PalPowerzones 				= false;
-	var mZone 								= [1, 2, 3, 4, 5, 6, 7, 8];
+	hidden var mZone 								= [1, 2, 3, 4, 5, 6, 7, 8];
 	var uBlackBackground 					= false;    	
 	var counterPace 						= 0;
 	var rollingPaceValue 					= new [303];
@@ -18,6 +22,13 @@ class ExtramemView extends DatarunpremiumView {
 	var VertPace3							= 0;
 	var VertPace4							= 0;
 	var VertPace5							= 0;
+	var uGarminColors 						= false;
+	var Z1color = Graphics.COLOR_LT_GRAY;
+	var Z2color = Graphics.COLOR_YELLOW;
+	var Z3color = Graphics.COLOR_BLUE;
+	var Z4color = Graphics.COLOR_GREEN;
+	var Z5color = Graphics.COLOR_RED;
+	var Z6color = Graphics.COLOR_PURPLE;
 	var disablelabel1 						= false;
 	var disablelabel2 						= false;
 	var disablelabel3 						= false;
@@ -30,11 +41,12 @@ class ExtramemView extends DatarunpremiumView {
 	
     function initialize() {
         DatarunpremiumView.initialize();
-		var mApp 		 = Application.getApp();
-		uClockFieldMetric = mApp.getProperty("pClockFieldMetric");
-		rolavPacmaxsecs  = mApp.getProperty("prolavPacmaxsecs");
+		var mApp 		 	= Application.getApp();
+		uClockFieldMetric 	= mApp.getProperty("pClockFieldMetric");
+		rolavPacmaxsecs  	= mApp.getProperty("prolavPacmaxsecs");
 		uBlackBackground    = mApp.getProperty("pBlackBackground");
-        uHrZones = UserProfile.getHeartRateZones(UserProfile.getCurrentSport());
+		uGarminColors		= mApp.getProperty("pGarminColors");
+        uHrZones 			= UserProfile.getHeartRateZones(UserProfile.getCurrentSport());
         disablelabel1 						= mApp.getProperty("pdisablelabel1");
 		disablelabel2 						= mApp.getProperty("pdisablelabel2");
 		disablelabel3 						= mApp.getProperty("pdisablelabel3");
@@ -115,6 +127,7 @@ class ExtramemView extends DatarunpremiumView {
         VertPace1								= CurrentVertSpeedinmpersec; 
 		var AverageVertspeedinmper5sec= (VertPace1+VertPace2+VertPace3+VertPace4+VertPace5)/5;
 		
+		var sensorIter = getIterator();
 		maxHR = uHrZones[5];
 		var i = 0; 
 	    for (i = 1; i < 5; ++i) {
@@ -210,6 +223,10 @@ class ExtramemView extends DatarunpremiumView {
     	        fieldValue[i] = (info.calories != null) ? info.calories : 0;
         	    fieldLabel[i] = "kCal";
             	fieldFormat[i] = "0decimal";
+            } else if (metric[i] == 89) {
+    	        fieldValue[i] = (sensorIter != null) ? sensorIter.next().data : 0;
+        	    fieldLabel[i] = "Temp";
+            	fieldFormat[i] = "1decimal";
 			} 
 		}
 
@@ -367,39 +384,39 @@ class ExtramemView extends DatarunpremiumView {
            		CFMValue = (unitD == 1609.344) ? AverageVertspeedinmper5sec*3.2808 : AverageVertspeedinmper5sec;
             	CFMLabel = "V speed";
             	CFMFormat = "2decimal"; 
-            } else if (metric[i] == 81) {
+            } else if (uClockFieldMetric == 81) {
 	        	if (Toybox.Activity.Info has :distanceToNextPoint) {
     	        	CFMValue = (info.distanceToNextPoint != null) ? info.distanceToNextPoint / unitD : 0;
     	        }
         	    CFMLabel = "DistNext";
             	CFMFormat = "2decimal";
-			} else if (metric[i] == 82) {
+			} else if (uClockFieldMetric == 82) {
     	        if (Toybox.Activity.Info has :distanceToDestination) {
     	        	CFMValue = (info.distanceToDestination != null) ? info.distanceToNextPoint / unitD : 0;
     	        }
         	    CFMLabel = "DistDest";
             	CFMFormat = "2decimal";
-           	} else if (metric[i] == 83) {
+           	} else if (uClockFieldMetric == 83) {
             	CFMValue = (maxHR != 0) ? currentHR*100/maxHR : 0;
             	CFMLabel = "%MaxHR";
             	CFMFormat = "0decimal";   
-			} else if (metric[i] == 84) {
+			} else if (uClockFieldMetric == 84) {
     	        CFMValue = (maxHR != 0) ? LapHeartrate*100/maxHR : 0;
         	    CFMLabel = "L %MaxHR";
             	CFMFormat = "0decimal";
-			} else if (metric[i] == 85) {
+			} else if (uClockFieldMetric == 85) {
         	    CFMValue = (maxHR != 0) ? LastLapHeartrate*100/maxHR : 0;
             	CFMLabel = "LL %MaxHR";
             	CFMFormat = "0decimal";
-	        } else if (metric[i] == 86) {
+	        } else if (uClockFieldMetric == 86) {
     	        CFMValue = (maxHR != 0) ? AverageHeartrate*100/maxHR : 0;
         	    CFMLabel = "A %MaxHR";
             	CFMFormat = "0decimal";  
-	        } else if (metric[i] == 87) {
+	        } else if (uClockFieldMetric == 87) {
     	        CFMValue = (info.calories != null) ? info.calories : 0;
         	    CFMLabel = "kCal";
             	CFMFormat = "0decimal"; 
-			} else if (metric[i] == 88) {   
+			} else if (uClockFieldMetric == 88) {   
             	if (mLastLapSpeed == null or info.currentSpeed==0) {
             		CFMValue = 0;
             	} else {
@@ -407,7 +424,12 @@ class ExtramemView extends DatarunpremiumView {
             	}
             	CFMLabel = "LL s/100m";
         	    CFMFormat = "1decimal";
-			}			 
+        	} else if (uClockFieldMetric == 89) {
+    	        CFMValue = (sensorIter != null) ? sensorIter.next().data : 0;
+        	    CFMLabel = "Temp";
+            	CFMFormat = "1decimal";
+			}
+			 
 
 		//! Conditions for showing the demoscreen       
         if (uShowDemo == false) {
@@ -421,7 +443,7 @@ class ExtramemView extends DatarunpremiumView {
 
 		//! Display colored labels on screen	
 		if (ID0 == 3801 or ID0 == 4026 ) {  //! Fenix 6 pro labels
-			for (var i = 1; i < 8; ++i) {
+			for (var i = 1; i < 5; ++i) {
 			   	if ( i == 1 ) {			//!upper row, left    	
 	    			if (disablelabel1 == false) {
 	    				Coloring(dc,i,fieldValue[i],"022,031,108,027");
@@ -441,7 +463,7 @@ class ExtramemView extends DatarunpremiumView {
 		    	}       	
 			}		
 		} else if (ID0 == 3802 or ID0 == 4027 ) {     //! Fenix 6x pro labels
-			for (var i = 1; i < 8; ++i) {
+			for (var i = 1; i < 5; ++i) {
 			   	if ( i == 1 ) {			//!upper row, left    	
 	    			if (disablelabel1 == false) {
 	    				Coloring(dc,i,fieldValue[i],"023,034,117,029");
@@ -583,14 +605,44 @@ class ExtramemView extends DatarunpremiumView {
             mZ4under = uHrZones[3];
             mZ5under = uHrZones[4];
             mZ5upper = uHrZones[5];
+            if (uGarminColors == true) {
+        		Z1color = Graphics.COLOR_LT_GRAY;
+        		Z2color = Graphics.COLOR_BLUE;
+        		Z3color = Graphics.COLOR_GREEN;
+        		Z4color = Graphics.COLOR_ORANGE;
+        		Z5color = Graphics.COLOR_RED;
+        		Z6color = Graphics.COLOR_PURPLE;
+    	    } else {
+        		Z1color = Graphics.COLOR_LT_GRAY;
+        		Z2color = Graphics.COLOR_YELLOW;
+        		Z3color = Graphics.COLOR_BLUE;
+        		Z4color = Graphics.COLOR_GREEN;
+        		Z5color = Graphics.COLOR_RED;
+        		Z6color = Graphics.COLOR_PURPLE;
+    		}
         } else if (metric[counter] == 50) {  //! Cadence
             mZ1under = 120;
             mZ2under = 153;
             mZ3under = 164;
             mZ4under = 174;
             mZ5under = 183;
-            mZ5upper = 300; 
-        } else if (metric[counter] == 20 or metric[counter] == 21 or metric[counter] == 22 or metric[counter] == 23 or metric[counter] == 24 or metric[counter] == 37 or metric[counter] == 38 or metric[counter] == 70 or metric[counter] == 39 or metric[counter] == 80) {  //! Power=20, Powerzone=38, Pwr 5s=21, L Power=22, L-1 Pwr=23, A Power=24
+            mZ5upper = 300;
+            if (uGarminColors == true) {
+        		Z1color = Graphics.COLOR_LT_GRAY;
+        		Z2color = Graphics.COLOR_RED;
+        		Z3color = Graphics.COLOR_ORANGE;
+        		Z4color = Graphics.COLOR_GREEN;
+        		Z5color = Graphics.COLOR_BLUE;
+        		Z6color = Graphics.COLOR_PURPLE;
+    	    } else {
+        		Z1color = Graphics.COLOR_LT_GRAY;
+        		Z2color = Graphics.COLOR_YELLOW;
+        		Z3color = Graphics.COLOR_BLUE;
+        		Z4color = Graphics.COLOR_GREEN;
+        		Z5color = Graphics.COLOR_RED;
+        		Z6color = Graphics.COLOR_PURPLE;
+    		} 
+        } else if (metric[counter] == 20 or metric[counter] == 21 or metric[counter] == 22 or metric[counter] == 23 or metric[counter] == 24 or metric[counter] == 37 or metric[counter] == 38 or metric[counter] == 70 or metric[counter] == 39 or metric[counter] == 80  or metric[counter] == 99 or metric[counter] == 100 or metric[counter] == 101 or metric[counter] == 102 or metric[counter] == 103 or metric[counter] == 104) {  //! Power=20, Powerzone=38, Pwr 5s=21, L Power=22, L-1 Pwr=23, A Power=24
         	mZ1under = uPowerZones.substring(0, 3);
         	mZ2under = uPowerZones.substring(7, 10);
         	mZ3under = uPowerZones.substring(14, 17);
@@ -603,6 +655,21 @@ class ExtramemView extends DatarunpremiumView {
 	        mZ4under = mZ4under.toNumber();        
     	    mZ5under = mZ5under.toNumber();
         	mZ5upper = mZ5upper.toNumber();		
+        	if (uGarminColors == true) {
+        		Z1color = Graphics.COLOR_LT_GRAY;
+        		Z2color = Graphics.COLOR_BLUE;
+        		Z3color = Graphics.COLOR_GREEN;
+        		Z4color = Graphics.COLOR_ORANGE;
+        		Z5color = Graphics.COLOR_RED;
+        		Z6color = Graphics.COLOR_PURPLE;
+    	    } else {
+        		Z1color = Graphics.COLOR_LT_GRAY;
+        		Z2color = Graphics.COLOR_YELLOW;
+        		Z3color = Graphics.COLOR_BLUE;
+        		Z4color = Graphics.COLOR_GREEN;
+        		Z5color = Graphics.COLOR_RED;
+        		Z6color = Graphics.COLOR_PURPLE;
+    		}
         } else if (metric[counter] == 8 or metric[counter] == 9 or metric[counter] == 10 or metric[counter] == 11 or metric[counter] == 12 or metric[counter] == 40 or metric[counter] == 41 or metric[counter] == 42 or metric[counter] == 43 or metric[counter] == 44) {  //! Pace=8, Pace 5s=9, L Pace=10, L-1 Pace=11, AvgPace=12, Speed=40, Spd 5s=41, L Spd=42, LL Spd=43, Avg Spd=44
             mZ1under = avgSpeed*0.9;
             mZ2under = avgSpeed*0.95;
@@ -620,30 +687,30 @@ class ExtramemView extends DatarunpremiumView {
         }
         mZone[counter] = 0;
         if (testvalue >= mZ5upper) {
-            mfillColour = Graphics.COLOR_PURPLE;
+            mfillColour = Z6color;
 			mZone[counter] = 6;			
 		} else if (testvalue >= mZ5under) {
-			mfillColour = Graphics.COLOR_RED;    	
+			mfillColour = Z5color;    	
 			mZone[counter] = Math.round(10*(5+(testvalue-mZ5under+0.00001)/(mZ5upper-mZ5under+0.00001)))/10;			
 		} else if (testvalue >= mZ4under) {
-			mfillColour = Graphics.COLOR_GREEN;    	
+			mfillColour = Z4color;    	
 			mZone[counter] = Math.round(10*(4+(testvalue-mZ4under+0.00001)/(mZ5under-mZ4under+0.00001)))/10;			
 		} else if (testvalue >= mZ3under) {
-			mfillColour = Graphics.COLOR_BLUE;        
+			mfillColour = Z3color;        
 			mZone[counter] = Math.round(10*(3+(testvalue-mZ3under+0.00001)/(mZ4under-mZ3under+0.00001)))/10;
 		} else if (testvalue >= mZ2under) {
-			mfillColour = Graphics.COLOR_YELLOW;        
+			mfillColour = Z2color;        
 			mZone[counter] = Math.round(10*(2+(testvalue-mZ2under+0.00001)/(mZ3under-mZ2under+0.00001)))/10;
 		} else if (testvalue >= mZ1under) {			
-			mfillColour = Graphics.COLOR_LT_GRAY;        
-			mZone[counter] = 1;
+			mfillColour = Z1color;        
+			mZone[counter] = Math.round(10*(1+(testvalue-mZ1under+0.00001)/(mZ2under-mZ1under+0.00001)))/10;
 		} else {
 			mfillColour = mColourBackGround;        
             mZone[counter] = 0;
 		}		
 
 		if ( PalPowerzones == true) {
-		  if (metric[counter] == 20 or metric[counter] == 21 or metric[counter] == 22 or metric[counter] == 23 or metric[counter] == 24 or metric[counter] == 37 or metric[counter] == 38) {  //! Power=20, Powerzone=38, Pwr 5s=21, L Power=22, L-1 Pwr=23, A Power=24		
+		  if (metric[counter] == 20 or metric[counter] == 21 or metric[counter] == 22 or metric[counter] == 23 or metric[counter] == 24 or metric[counter] == 37 or metric[counter] == 38  or metric[counter] == 99 or metric[counter] == 100 or metric[counter] == 101 or metric[counter] == 102 or metric[counter] == 103 or metric[counter] == 104) {  //! Power=20, Powerzone=38, Pwr 5s=21, L Power=22, L-1 Pwr=23, A Power=24		
         	mZ1under = uPower10Zones.substring(0, 3);
         	mZ2under = uPower10Zones.substring(7, 10);
         	mZ3under = uPower10Zones.substring(14, 17);
@@ -701,7 +768,7 @@ class ExtramemView extends DatarunpremiumView {
                     mZone[counter] = Math.round(10*(2+(testvalue-mZ2under+0.00001)/(mZ3under-mZ2under+0.00001)))/10;
                 } else if (testvalue >= mZ1under) {
                     mfillColour = Graphics.COLOR_DK_GRAY;        //! (Z1)
-                    mZone[counter] = 1;
+                    mZone[counter] = Math.round(10*(1+(testvalue-mZ1under+0.00001)/(mZ2under-mZ1under+0.00001)))/10;
                 } else {
                     mfillColour = Graphics.COLOR_LT_GRAY;        //! (Z0)
                     mZone[counter] = 0;
@@ -710,7 +777,7 @@ class ExtramemView extends DatarunpremiumView {
 		   }
 		}
 
-		if (metric[counter] == 20 or metric[counter] == 21 or metric[counter] == 22 or metric[counter] == 23 or metric[counter] == 24 or metric[counter] == 37 or metric[counter] == 38) {
+		if (metric[counter] == 20 or metric[counter] == 21 or metric[counter] == 22 or metric[counter] == 23 or metric[counter] == 24 or metric[counter] == 37 or metric[counter] == 38 or metric[counter] == 99 or metric[counter] == 100 or metric[counter] == 101 or metric[counter] == 102 or metric[counter] == 103 or metric[counter] == 104) {
 			Powerzone = mZone[counter];
 		}
 		if (metric[counter] == 45 or metric[counter] == 46 or metric[counter] == 47 or metric[counter] == 48 or metric[counter] == 49) {		
@@ -725,7 +792,14 @@ class ExtramemView extends DatarunpremiumView {
         }	
 		dc.setColor(mfillColour, Graphics.COLOR_TRANSPARENT);
         dc.fillRectangle(x, y, w, h);
-	}
+	}	
+}
 
-	
+//! Create a method to get the SensorHistoryIterator object
+function getIterator() {
+    //! Check device for SensorHistory compatibility
+    if ((Toybox has :SensorHistory) && (Toybox.SensorHistory has :getTemperatureHistory)) {
+        return Toybox.SensorHistory.getTemperatureHistory({});
+    }
+    return null;
 }
