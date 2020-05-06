@@ -8,7 +8,7 @@
     	<font id="Garmin6" filename="fonts/Roadway62-alleencijfers.fnt" antialias="true"/>    	
 	</fonts>
   <properties>
-    <property id="pAppversion" type="string">2.23c</property>
+    <property id="pAppversion" type="string">2.27b</property>
     <property id="pUpperLeftMetric" type="number">0</property>
     <property id="pUpperRightMetric" type="number">4</property>   
     <property id="pBottomLeftMetric" type="number">20</property>
@@ -42,19 +42,27 @@
     <property id="pdisablelabel4" type="boolean">false</property>
     <property id="pGarminColors" type="boolean">false</property>
     <property id="pWeight" type="number">70</property>
+    <property id="ptempunits" type="boolean">false</property>
+    <property id="pPowerTarget" type="number">225</property>
+    <property id="pOnlyPwrCorrFactor" type="boolean">false</property>
+    <property id="pPwrTempcorrect" type="number">0</property>
+    <property id="pPwrHumidcorrect" type="number">0</property>
+    <property id="pPwrAlticorrect" type="number">0</property>
+    <property id="pFTPTemp" type="number">20</property>
+    <property id="pManTemp" type="number">20</property>
+    <property id="pRealHumid" type="number">70</property>
+    <property id="pFTPHumid" type="number">70</property>
+    <property id="pRealAltitude" type="number">200</property>
+    <property id="pFTPAltitude" type="number">200</property>
     <property id="pCCnumber" type="number">9999999</property>
   </properties>
 
 	
   <strings>
-    <!-- Release name: -->
     <string id="AppName">Datarun premium with 4 metrics, copy 2 version</string>
-    <!-- Beta name:
-    <string id="AppName">Datarun premium with 4 metrics, copy 2 version</string>
-    -->
-    <string id="AppVersion">2.23c</string>
+    <string id="AppVersion">2.27b</string>
     <string id="lCCnumber">C-Code generated on the watch by the corresponding main Datarun premium datafield</string>
-    <string id="lDummysetting4version">Version 2.23c of Datarun premium with 4 metrics, copy 2 version (dummy setting)</string>
+    <string id="lDummysetting4version">Version 2.27b of Datarun premium with 4 metrics, copy 2 version (dummy setting)</string>
 	<string id="lTimeMenu">___Time items___</string>
 	<string id="lDistanceMenu">___Distance items___</string>
 	<string id="lPaceMenu">___Pace items___</string>
@@ -63,7 +71,7 @@
 	<string id="lHRMenu">___Heartrate items___</string>
 	<string id="lSPowerMenu">___Power items___</string>
 	<string id="lPIMenu">___Performance indicator items___</string>
-	<string id="lAltitudeMenu">___Altitude items___</string>
+	<string id="lAltitudeMenu">___Altitude and temperature items___</string>
     <string id="lTimerDisplay">Timer field</string>
     <string id="lTimerTimer">Timer</string>
     <string id="lTimerLap">Current lap time</string>
@@ -194,7 +202,9 @@
     <string id="lApercMaxHR">Average HR in percentage of MaxHR</string>	
     <string id="lkCalories">Used kilocalories</string>
     <string id="lLLPaceper100m">Pace of last lap in seconds per 100 meter (for track running)</string>
-    <string id="lTemp">Current temperature</string>
+    <string id="lTemp">Current watch temperature</string>
+	<string id="lTempeTemp">Current Tempe temperature (requires Tempe!)</string>
+    <string id="ltempunits">Use Fahrenheit instead of Celsius for temperature metrics (Celsius is default)</string>
 	<string id="lGarminColors">Use Garmin color scheme for label colors (not applicable for Palladino 10 powerzones)</string>
 	<string id="lWeight">Weight in kilo's (needed for Running Effectiveness as used by Steve Palladino)</string>
     <string id="lCurRE">Current Running Effectiveness (as used by Steve Palladino)</string>
@@ -202,6 +212,27 @@
     <string id="l5secRE">Rolling average over the last 5 seconds of Running Effectiveness (as used by Steve Palladino)</string>
     <string id="lLapE">Lap Running Effectiveness (as used by Steve Palladino)</string>
     <string id="lAverRE">Average Running Effectiveness (as used by Steve Palladino)</string>
+    <string id="lPowerTarget">Powertarget in Watt, useful when power correction is set only to influence powertarget</string>
+    <string id="lPtargetcorrect">Powertarget in Watt as set in settings, corrected by temperature/humidity/altitude if set in settings</string>
+    <string id="lOnlyPwrCorrFactor">Use correction factors for running power only to change powertarget</string>
+    <string id="lPwrTempcorrect">Power correction based on temperature</string>
+    <string id="lNoPwrTempcorrect">No correction</string>
+    <string id="lTempePwrTempcorrect">Correction based on Tempe temperature (no correction for temperature during first 5 minutes!)</string>
+    <string id="lManPwrTempcorrect">Correction based on manual set temperature (manually set in settings)</string>
+    <string id="lFTPTemp">Temperature in F or C by which Critical power or FTP is determined, for power correction based on temperature</string>
+    <string id="lManTemp">Current temperature in F or C, for power correction based on temperature (manual setting instead of being delivered by Tempe)</string>
+    <string id="lCalcPwrTempcorrect">Calculated power correction percentage based on temperature</string>
+    <string id="lPwrHumidcorrect">Power correction based on humidity</string>
+    <string id="lNoPwrHumidcorrect">No correction</string>
+    <string id="lManPwrHumidcorrect">Correction based on manual set humidity</string>
+    <string id="lRealHumid">Current humidity in %, for power correction based on humidity</string>
+    <string id="lFTPHumid">Humidity in % by which Critical power or FTP is determined, for power correction based on humidity</string>
+    <string id="lPwrAlticorrect">Power correction based on altitude</string>
+    <string id="lNoPwrAlticorrect">No correction</string>
+    <string id="lPwrAlticorrect">Correction based on altitude generated by barometer or GPS (watch decides independently which source it will be)</string>
+    <string id="lManPwrAlticorrect">Correction based on manual set altitude</string>
+    <string id="lRealAltitude">Current altitude, for power correction based on altitude</string>
+    <string id="lFTPAltitude">Altitude at which Critical power or FTP is determined, for power correction based on altitude</string>
  </strings>
 
   <settings>
@@ -227,6 +258,9 @@
     <setting propertyKey="@Properties.pRoundedPace" title="@Strings.lRoundedPace">
       <settingConfig type="boolean" required="true" />
     </setting>
+    <setting propertyKey="@Properties.ptempunits" title="@Strings.ltempunits">
+      <settingConfig type="boolean" required="true" />
+    </setting>
     <setting propertyKey="@Properties.pETAfromLap" title="@Strings.lETAfromLap">
       <settingConfig type="boolean" required="true" />
     </setting>
@@ -243,6 +277,50 @@
       <settingConfig type="numeric"  required="true"/>
     </setting>
     <setting propertyKey="@Properties.pCP" title="@Strings.lCP">
+      <settingConfig type="numeric"  required="true"/>
+    </setting>
+    <setting propertyKey="@Properties.pPowerTarget" title="@Strings.lPowerTarget">
+      <settingConfig type="numeric"  required="true"/>
+    </setting> 
+    <setting propertyKey="@Properties.pOnlyPwrCorrFactor" title="@Strings.lOnlyPwrCorrFactor">
+      <settingConfig type="boolean" required="false" />
+    </setting>
+    <setting propertyKey="@Properties.pPwrTempcorrect" title="@Strings.lPwrTempcorrect">
+      <settingConfig type="list" required="true">
+        <listEntry value="0">@Strings.lNoPwrTempcorrect</listEntry>
+        <listEntry value="1">@Strings.lTempePwrTempcorrect</listEntry>
+        <listEntry value="2">@Strings.lManPwrTempcorrect</listEntry>
+      </settingConfig>
+    </setting>    
+    <setting propertyKey="@Properties.pFTPTemp" title="@Strings.lFTPTemp">
+      <settingConfig type="numeric"  required="true"/>
+    </setting>
+    <setting propertyKey="@Properties.pManTemp" title="@Strings.lManTemp">
+      <settingConfig type="numeric"  required="true"/>
+    </setting>
+    <setting propertyKey="@Properties.pPwrHumidcorrect" title="@Strings.lPwrHumidcorrect">
+      <settingConfig type="list" required="true">
+        <listEntry value="0">@Strings.lNoPwrHumidcorrect</listEntry>
+        <listEntry value="2">@Strings.lManPwrHumidcorrect</listEntry>
+      </settingConfig>
+    </setting>          
+    <setting propertyKey="@Properties.pFTPHumid" title="@Strings.lFTPHumid">
+      <settingConfig type="numeric"  required="true"/>
+    </setting>      
+    <setting propertyKey="@Properties.pRealHumid" title="@Strings.lRealHumid">
+      <settingConfig type="numeric"  required="true"/>
+    </setting>
+    <setting propertyKey="@Properties.pPwrAlticorrect" title="@Strings.lPwrAlticorrect">
+      <settingConfig type="list" required="true">
+        <listEntry value="0">@Strings.lNoPwrAlticorrect</listEntry>
+        <listEntry value="1">@Strings.lPwrAlticorrect</listEntry>
+        <listEntry value="2">@Strings.lManPwrAlticorrect</listEntry>
+      </settingConfig>
+    </setting>
+    <setting propertyKey="@Properties.pFTPAltitude" title="@Strings.lFTPAltitude">
+      <settingConfig type="numeric"  required="true"/>
+    </setting> 
+    <setting propertyKey="@Properties.pRealAltitude" title="@Strings.lRealAltitude">
       <settingConfig type="numeric"  required="true"/>
     </setting>  
     <setting propertyKey="@Properties.pWeight" title="@Strings.lWeight">
@@ -336,6 +414,8 @@
         <listEntry value="86">@Strings.lApercMaxHR</listEntry>
                 
         <listEntry value="996">@Strings.lSPowerMenu</listEntry>
+        <listEntry value="107">@Strings.lPtargetcorrect</listEntry>
+        <listEntry value="106">@Strings.lCalcPwrTempcorrect</listEntry>
         <listEntry value="20">@Strings.lSPower</listEntry>
         <listEntry value="57">@Strings.lNPower</listEntry>
         <listEntry value="38">@Strings.lSPowerzone</listEntry>
@@ -390,6 +470,7 @@
         <listEntry value="52">@Strings.lElevationGain</listEntry>
         <listEntry value="53">@Strings.lElevationLoss</listEntry>
         <listEntry value="89">@Strings.lTemp</listEntry>
+        <listEntry value="105">@Strings.lTempeTemp</listEntry>
       </settingConfig>
     </setting>
     <setting propertyKey="@Properties.pUpperRightMetric" title="@Strings.lUpperRightMetric">
@@ -449,6 +530,8 @@
         <listEntry value="86">@Strings.lApercMaxHR</listEntry>
                 
         <listEntry value="996">@Strings.lSPowerMenu</listEntry>
+        <listEntry value="107">@Strings.lPtargetcorrect</listEntry>
+        <listEntry value="106">@Strings.lCalcPwrTempcorrect</listEntry>
         <listEntry value="20">@Strings.lSPower</listEntry>
         <listEntry value="57">@Strings.lNPower</listEntry>
         <listEntry value="38">@Strings.lSPowerzone</listEntry>
@@ -503,6 +586,7 @@
         <listEntry value="52">@Strings.lElevationGain</listEntry>
         <listEntry value="53">@Strings.lElevationLoss</listEntry>
         <listEntry value="89">@Strings.lTemp</listEntry>
+        <listEntry value="105">@Strings.lTempeTemp</listEntry>
       </settingConfig>
     </setting>
 
@@ -563,6 +647,8 @@
         <listEntry value="86">@Strings.lApercMaxHR</listEntry>
                 
         <listEntry value="996">@Strings.lSPowerMenu</listEntry>
+        <listEntry value="107">@Strings.lPtargetcorrect</listEntry>
+        <listEntry value="106">@Strings.lCalcPwrTempcorrect</listEntry>
         <listEntry value="20">@Strings.lSPower</listEntry>
         <listEntry value="57">@Strings.lNPower</listEntry>
         <listEntry value="38">@Strings.lSPowerzone</listEntry>
@@ -617,6 +703,7 @@
         <listEntry value="52">@Strings.lElevationGain</listEntry>
         <listEntry value="53">@Strings.lElevationLoss</listEntry>
         <listEntry value="89">@Strings.lTemp</listEntry>
+        <listEntry value="105">@Strings.lTempeTemp</listEntry>
       </settingConfig>
     </setting>
     <setting propertyKey="@Properties.pBottomRightMetric" title="@Strings.lBottomRightMetric">
@@ -676,6 +763,8 @@
         <listEntry value="86">@Strings.lApercMaxHR</listEntry>
                 
         <listEntry value="996">@Strings.lSPowerMenu</listEntry>
+        <listEntry value="107">@Strings.lPtargetcorrect</listEntry>
+        <listEntry value="106">@Strings.lCalcPwrTempcorrect</listEntry>
         <listEntry value="20">@Strings.lSPower</listEntry>
         <listEntry value="57">@Strings.lNPower</listEntry>
         <listEntry value="38">@Strings.lSPowerzone</listEntry>
@@ -731,6 +820,7 @@
         <listEntry value="52">@Strings.lElevationGain</listEntry>
         <listEntry value="53">@Strings.lElevationLoss</listEntry>
         <listEntry value="89">@Strings.lTemp</listEntry>
+        <listEntry value="105">@Strings.lTempeTemp</listEntry>
        </settingConfig>
     </setting>
     <setting propertyKey="@Properties.pClockFieldMetric" title="@Strings.lClockFieldMetric">
@@ -783,6 +873,7 @@
         <listEntry value="52">@Strings.lElevationGain</listEntry>
         <listEntry value="53">@Strings.lElevationLoss</listEntry>
         <listEntry value="89">@Strings.lTemp</listEntry>
+        <listEntry value="105">@Strings.lTempeTemp</listEntry>
         
         <listEntry value="997">@Strings.lPIMenu</listEntry>
         <listEntry value="32">@Strings.lCEFactor</listEntry>
