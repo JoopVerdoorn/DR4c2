@@ -1,7 +1,7 @@
 <resources>
 
   <properties>
-    <property id="pAppversion" type="string">2.27b</property>
+    <property id="pAppversion" type="string">2.30</property>
     <property id="pUpperLeftMetric" type="number">0</property>
     <property id="pUpperRightMetric" type="number">4</property>    
     <property id="pBottomLeftMetric" type="number">20</property>
@@ -25,9 +25,9 @@
 	
   <strings>
     <string id="AppName">Datarun premium with 4 metrics, copy 2 version</string>
-    <string id="AppVersion">2.27b</string>
+    <string id="AppVersion">2.30</string>
+    <string id="lDummysetting4version">Version 2.30 of Datarun premium with 4 metrics, copy 2 version (dummy setting)</string>
     <string id="lCCnumber">C-Code generated on the watch by the corresponding main Datarun premium datafield</string>
-    <string id="lDummysetting4version">Version 2.27b of Datarun premium with 4 metrics, copy 2 version (dummy setting)</string>
 	<string id="lTimeMenu">___Time items___</string>
 	<string id="lDistanceMenu">___Distance items___</string>
 	<string id="lPaceMenu">___Pace items___</string>
@@ -110,7 +110,6 @@
     <setting propertyKey="@Properties.pCCnumber" title="@Strings.lCCnumber">
         <settingConfig type="numeric" errorMessage="@Strings.MyNumberError" />
     </setting>
-    
     <setting propertyKey="@Properties.pRoundedPace" title="@Strings.lRoundedPace">
       <settingConfig type="boolean" required="true" />
     </setting>

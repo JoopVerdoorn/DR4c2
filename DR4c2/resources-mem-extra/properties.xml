@@ -4,7 +4,7 @@
     	<font id="Garmin2" filename="fonts/Roadway53-alleencijfers.fnt" antialias="true"/>
 	</fonts>
   <properties>
-    <property id="pAppversion" type="string">2.27b</property>
+    <property id="pAppversion" type="string">2.30</property>
     <property id="pUpperLeftMetric" type="number">0</property>
     <property id="pUpperRightMetric" type="number">4</property> 
     <property id="pBottomLeftMetric" type="number">46</property>
@@ -28,21 +28,23 @@
     <property id="pdisablelabel4" type="boolean">false</property>
     <property id="pGarminColors" type="boolean">false</property>
     <property id="ptempunits" type="boolean">false</property>
+    <property id="pTempeCalibration" type="number">0</property>
     <property id="pCCnumber" type="number">9999999</property>
   </properties>
 
 	
   <strings>
     <string id="AppName">Datarun premium with 4 metrics, copy 2 version</string>
-    <string id="AppVersion">2.27b</string>
+    <string id="AppVersion">2.30</string>
+    <string id="lDummysetting4version">Version 2.30 of Datarun premium with 4 metrics, copy 2 version (dummy setting)</string>
     <string id="lCCnumber">C-Code generated on the watch by the corresponding main Datarun premium datafield</string>
-    <string id="lDummysetting4version">Version 2.27b of Datarun premium with 4 metrics, copy 2 version (dummy setting)</string>
 	<string id="lTimeMenu">___Time items___</string>
 	<string id="lDistanceMenu">___Distance items___</string>
 	<string id="lPaceMenu">___Pace items___</string>
 	<string id="lETAMenu">___ETA items___</string>
 	<string id="lSpeedMenu">___Speed items___</string>
 	<string id="lHRMenu">___Heartrate items___</string>
+	<string id="lCadenceMenu">___Cadence items___</string>
 	<string id="lSPowerMenu">___Power items___</string>
 	<string id="lPIMenu">___Performance indicator items___</string>
 	<string id="lAltitudeMenu">___Altitude and temperature items___</string>
@@ -115,6 +117,9 @@
 	<string id="lAverage5secSpeed">Speed averaged over the last 5 seconds in km/mile per hour</string>
 	<string id="lAverage30secSpeed">Speed averaged over the last .. seconds in km/mile per hour (max is 300 seconds)</string>
 	<string id="lRCadence">Cadence in rotations per minute</string>
+	<string id="lAveraCadence">Average cadence</string>
+	<string id="lLapCadence">Current lap cadence</string>
+	<string id="lLLCadence">Last lap cadence</string>
 	<string id="lAEFactor">Average efficiency factor</string>
 	<string id="lCEFactor">Current efficiency factor</string>
 	<string id="lLEFactor">Current lap efficiency factor</string>
@@ -133,6 +138,7 @@
     <string id="lLLPaceper100m">Pace of last lap in seconds per 100 meter (for track running)</string>
     <string id="lTemp">Current watch temperature</string>
 	<string id="lTempeTemp">Current Tempe temperature (requires Tempe!)</string>
+	<string id="lTempeCalibration">Calibration factor for Tempe temperature in tenths of degrees (3 means 0.3 added, -4 means 0.4 subtracted)</string>
 	<string id="ltempunits">Use Fahrenheit instead of Celsius for temperature metrics (Celsius is default)</string>
 	<string id="lGarminColors">Use Garmin color scheme for label colors (not applicable for Palladino 10 powerzones)</string>
  </strings>
@@ -153,7 +159,6 @@
     <setting propertyKey="@Properties.pCCnumber" title="@Strings.lCCnumber">
         <settingConfig type="numeric" errorMessage="@Strings.MyNumberError" />
     </setting>
-    
     <setting propertyKey="@Properties.pRoundedPace" title="@Strings.lRoundedPace">
       <settingConfig type="boolean" required="true" />
     </setting>
@@ -162,6 +167,12 @@
     </setting>
     <setting propertyKey="@Properties.pRacetime" title="@Strings.lRacetimeTitle">
       <settingConfig type="alphaNumeric"  required="true"/>
+    </setting>
+    <setting propertyKey="@Properties.ptempunits" title="@Strings.ltempunits">
+      <settingConfig type="boolean" required="true" />
+    </setting>
+    <setting propertyKey="@Properties.pTempeCalibration" title="@Strings.lTempeCalibration">
+      <settingConfig type="numeric"  required="true"/>
     </setting>
     <setting propertyKey="@Properties.pMilClockAltern" title="@Strings.lMilClockAltern">
       <settingConfig type="list" required="true">
@@ -210,12 +221,6 @@
         <listEntry value="10">@Strings.lLapPace</listEntry>
         <listEntry value="11">@Strings.lLastLapPace</listEntry>
         <listEntry value="12">@Strings.lAvgPace</listEntry>
-        <listEntry value="50">@Strings.lCadence</listEntry>
-        
-        <listEntry value="993">@Strings.lETAMenu</listEntry>
-        <listEntry value="13">@Strings.lETArequiredpace</listEntry>
-        <listEntry value="14">@Strings.lETA</listEntry>
-        <listEntry value="15">@Strings.lETAdeviation</listEntry>
 
         <listEntry value="994">@Strings.lSpeedMenu</listEntry>
         <listEntry value="40">@Strings.lCurrentSpeed</listEntry>
@@ -225,8 +230,19 @@
         <listEntry value="42">@Strings.lLapSpeed</listEntry>
         <listEntry value="43">@Strings.lLLSpeed</listEntry>
         <listEntry value="44">@Strings.lAverageSpeed</listEntry>
+
+        <listEntry value="999">@Strings.lCadenceMenu</listEntry>
+        <listEntry value="50">@Strings.lCadence</listEntry>
         <listEntry value="61">@Strings.lRCadence</listEntry>
+        <listEntry value="90">@Strings.lLapCadence</listEntry>
+        <listEntry value="91">@Strings.lLLCadence</listEntry>
+        <listEntry value="92">@Strings.lAveraCadence</listEntry>
         
+        <listEntry value="993">@Strings.lETAMenu</listEntry>
+        <listEntry value="13">@Strings.lETArequiredpace</listEntry>
+        <listEntry value="14">@Strings.lETA</listEntry>
+        <listEntry value="15">@Strings.lETAdeviation</listEntry>
+                
         <listEntry value="995">@Strings.lHRMenu</listEntry>
         <listEntry value="45">@Strings.lHeartrate</listEntry>
         <listEntry value="46">@Strings.lHeartrateZone</listEntry>
@@ -244,6 +260,7 @@
         <listEntry value="28">@Strings.lLEFactor</listEntry>
         <listEntry value="29">@Strings.lLLEFactor</listEntry>
         <listEntry value="54">@Strings.lTEffect</listEntry>
+        <listEntry value="87">@Strings.lkCalories</listEntry>
 
         <listEntry value="998">@Strings.lAltitudeMenu</listEntry>
         <listEntry value="51">@Strings.lAltitude</listEntry>
@@ -280,12 +297,6 @@
         <listEntry value="10">@Strings.lLapPace</listEntry>
         <listEntry value="11">@Strings.lLastLapPace</listEntry>
         <listEntry value="12">@Strings.lAvgPace</listEntry>
-        <listEntry value="50">@Strings.lCadence</listEntry>
-        
-        <listEntry value="993">@Strings.lETAMenu</listEntry>
-        <listEntry value="13">@Strings.lETArequiredpace</listEntry>
-        <listEntry value="14">@Strings.lETA</listEntry>
-        <listEntry value="15">@Strings.lETAdeviation</listEntry>
 
         <listEntry value="994">@Strings.lSpeedMenu</listEntry>
         <listEntry value="40">@Strings.lCurrentSpeed</listEntry>
@@ -295,8 +306,19 @@
         <listEntry value="42">@Strings.lLapSpeed</listEntry>
         <listEntry value="43">@Strings.lLLSpeed</listEntry>
         <listEntry value="44">@Strings.lAverageSpeed</listEntry>
+
+        <listEntry value="999">@Strings.lCadenceMenu</listEntry>
+        <listEntry value="50">@Strings.lCadence</listEntry>
         <listEntry value="61">@Strings.lRCadence</listEntry>
+        <listEntry value="90">@Strings.lLapCadence</listEntry>
+        <listEntry value="91">@Strings.lLLCadence</listEntry>
+        <listEntry value="92">@Strings.lAveraCadence</listEntry>
         
+        <listEntry value="993">@Strings.lETAMenu</listEntry>
+        <listEntry value="13">@Strings.lETArequiredpace</listEntry>
+        <listEntry value="14">@Strings.lETA</listEntry>
+        <listEntry value="15">@Strings.lETAdeviation</listEntry>
+                
         <listEntry value="995">@Strings.lHRMenu</listEntry>
         <listEntry value="45">@Strings.lHeartrate</listEntry>
         <listEntry value="46">@Strings.lHeartrateZone</listEntry>
@@ -324,6 +346,7 @@
         <listEntry value="105">@Strings.lTempeTemp</listEntry>
       </settingConfig>
     </setting>
+
     
     <setting propertyKey="@Properties.pBottomLeftMetric" title="@Strings.lBottomLeftMetric">
       <settingConfig type="list" required="true">
@@ -352,12 +375,6 @@
         <listEntry value="10">@Strings.lLapPace</listEntry>
         <listEntry value="11">@Strings.lLastLapPace</listEntry>
         <listEntry value="12">@Strings.lAvgPace</listEntry>
-        <listEntry value="50">@Strings.lCadence</listEntry>
-        
-        <listEntry value="993">@Strings.lETAMenu</listEntry>
-        <listEntry value="13">@Strings.lETArequiredpace</listEntry>
-        <listEntry value="14">@Strings.lETA</listEntry>
-        <listEntry value="15">@Strings.lETAdeviation</listEntry>
 
         <listEntry value="994">@Strings.lSpeedMenu</listEntry>
         <listEntry value="40">@Strings.lCurrentSpeed</listEntry>
@@ -367,8 +384,19 @@
         <listEntry value="42">@Strings.lLapSpeed</listEntry>
         <listEntry value="43">@Strings.lLLSpeed</listEntry>
         <listEntry value="44">@Strings.lAverageSpeed</listEntry>
+
+        <listEntry value="999">@Strings.lCadenceMenu</listEntry>
+        <listEntry value="50">@Strings.lCadence</listEntry>
         <listEntry value="61">@Strings.lRCadence</listEntry>
+        <listEntry value="90">@Strings.lLapCadence</listEntry>
+        <listEntry value="91">@Strings.lLLCadence</listEntry>
+        <listEntry value="92">@Strings.lAveraCadence</listEntry>
         
+        <listEntry value="993">@Strings.lETAMenu</listEntry>
+        <listEntry value="13">@Strings.lETArequiredpace</listEntry>
+        <listEntry value="14">@Strings.lETA</listEntry>
+        <listEntry value="15">@Strings.lETAdeviation</listEntry>
+                
         <listEntry value="995">@Strings.lHRMenu</listEntry>
         <listEntry value="45">@Strings.lHeartrate</listEntry>
         <listEntry value="46">@Strings.lHeartrateZone</listEntry>
@@ -423,12 +451,6 @@
         <listEntry value="10">@Strings.lLapPace</listEntry>
         <listEntry value="11">@Strings.lLastLapPace</listEntry>
         <listEntry value="12">@Strings.lAvgPace</listEntry>
-        <listEntry value="50">@Strings.lCadence</listEntry>
-        
-        <listEntry value="993">@Strings.lETAMenu</listEntry>
-        <listEntry value="13">@Strings.lETArequiredpace</listEntry>
-        <listEntry value="14">@Strings.lETA</listEntry>
-        <listEntry value="15">@Strings.lETAdeviation</listEntry>
 
         <listEntry value="994">@Strings.lSpeedMenu</listEntry>
         <listEntry value="40">@Strings.lCurrentSpeed</listEntry>
@@ -438,8 +460,19 @@
         <listEntry value="42">@Strings.lLapSpeed</listEntry>
         <listEntry value="43">@Strings.lLLSpeed</listEntry>
         <listEntry value="44">@Strings.lAverageSpeed</listEntry>
+
+        <listEntry value="999">@Strings.lCadenceMenu</listEntry>
+        <listEntry value="50">@Strings.lCadence</listEntry>
         <listEntry value="61">@Strings.lRCadence</listEntry>
+        <listEntry value="90">@Strings.lLapCadence</listEntry>
+        <listEntry value="91">@Strings.lLLCadence</listEntry>
+        <listEntry value="92">@Strings.lAveraCadence</listEntry>
         
+        <listEntry value="993">@Strings.lETAMenu</listEntry>
+        <listEntry value="13">@Strings.lETArequiredpace</listEntry>
+        <listEntry value="14">@Strings.lETA</listEntry>
+        <listEntry value="15">@Strings.lETAdeviation</listEntry>
+                
         <listEntry value="995">@Strings.lHRMenu</listEntry>
         <listEntry value="45">@Strings.lHeartrate</listEntry>
         <listEntry value="46">@Strings.lHeartrateZone</listEntry>
@@ -488,7 +521,6 @@
         <listEntry value="12">@Strings.lAvgPace</listEntry>
         <listEntry value="81">@Strings.ldistanceToNextPoint</listEntry>
         <listEntry value="82">@Strings.ldistanceToDestination</listEntry>
-        <listEntry value="50">@Strings.lCadence</listEntry>
         <listEntry value="13">@Strings.lETArequiredpace</listEntry>
 
         <listEntry value="994">@Strings.lSpeedMenu</listEntry>
@@ -499,7 +531,13 @@
         <listEntry value="42">@Strings.lLapSpeed</listEntry>
         <listEntry value="43">@Strings.lLLSpeed</listEntry>
         <listEntry value="44">@Strings.lAverageSpeed</listEntry>
+        
+		<listEntry value="999">@Strings.lCadenceMenu</listEntry>
+        <listEntry value="50">@Strings.lCadence</listEntry>
         <listEntry value="61">@Strings.lRCadence</listEntry>
+        <listEntry value="90">@Strings.lLapCadence</listEntry>
+        <listEntry value="91">@Strings.lLLCadence</listEntry>
+        <listEntry value="92">@Strings.lAveraCadence</listEntry>
         
         <listEntry value="995">@Strings.lHRMenu</listEntry>
         <listEntry value="45">@Strings.lHeartrate</listEntry>

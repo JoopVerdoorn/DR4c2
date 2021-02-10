@@ -9,23 +9,7 @@ class PowerView extends CiqView {
     function initialize() {
         CiqView.initialize();
     }
-
-    //! Calculations we need to do every second even when the data field is not visible
-    function compute(info) {
-        //! If enabled, switch the backlight on in order to make it stay on
-        if (uBacklight) {
-             Attention.backlight(true);
-        }
-
-		//! We only do some calculations if the timer is running
-		if (mTimerRunning) {  
-			jTimertime = jTimertime + 1;
-			//!Calculate lapheartrate
-            mHeartrateTime		 = (info.currentHeartRate != null) ? mHeartrateTime+1 : mHeartrateTime;				
-           	mElapsedHeartrate    = (info.currentHeartRate != null) ? mElapsedHeartrate + info.currentHeartRate : mElapsedHeartrate;
-        }
-    }
-
+    
     //! Store last lap quantities and set lap markers
     function onTimerLap() {
 		LapactionNoPower ();
