@@ -4,7 +4,7 @@
     	<font id="Garmin2" filename="fonts/Roadway53-alleencijfers.fnt" antialias="true"/>
 	</fonts>
   <properties>
-    <property id="pAppversion" type="string">2.30</property>
+    <property id="pAppversion" type="string">2.33</property>
     <property id="pUpperLeftMetric" type="number">0</property>
     <property id="pUpperRightMetric" type="number">4</property> 
     <property id="pBottomLeftMetric" type="number">46</property>
@@ -30,14 +30,16 @@
     <property id="ptempunits" type="boolean">false</property>
     <property id="pTempeCalibration" type="number">0</property>
     <property id="pCCnumber" type="number">9999999</property>
+    <property id="pShowRedClock" type="boolean">false</property>
   </properties>
 
 	
   <strings>
     <string id="AppName">Datarun premium with 4 metrics, copy 2 version</string>
-    <string id="AppVersion">2.30</string>
-    <string id="lDummysetting4version">Version 2.30 of Datarun premium with 4 metrics, copy 2 version (dummy setting)</string>
+    <string id="AppVersion">2.33</string>
+    <string id="lDummysetting4version">Version 2.33 of Datarun premium with 4 metrics, copy 2 version (dummy setting)</string>
     <string id="lCCnumber">C-Code generated on the watch by the corresponding main Datarun premium datafield</string>
+    <string id="lShowRedClock">Show red clock over all metrics before the start of an activity (useful for a race when the normal clock isn't visible)</string>
 	<string id="lTimeMenu">___Time items___</string>
 	<string id="lDistanceMenu">___Distance items___</string>
 	<string id="lPaceMenu">___Pace items___</string>
@@ -173,6 +175,9 @@
     </setting>
     <setting propertyKey="@Properties.pTempeCalibration" title="@Strings.lTempeCalibration">
       <settingConfig type="numeric"  required="true"/>
+    </setting>
+    <setting propertyKey="@Properties.pShowRedClock" title="@Strings.lShowRedClock">
+      <settingConfig type="boolean" required="false" />
     </setting>
     <setting propertyKey="@Properties.pMilClockAltern" title="@Strings.lMilClockAltern">
       <settingConfig type="list" required="true">

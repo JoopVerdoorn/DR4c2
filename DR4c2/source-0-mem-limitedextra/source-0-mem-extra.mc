@@ -13,7 +13,6 @@ class ExtramemView extends DatarunpremiumView {
 	var Averagespeedinmpersec 				= 0;
 	var HRzone								= 0;
 	hidden var Powerzone					= 0;
-	var VertPace							= [1, 2, 3, 4, 5, 6];
 	var uGarminColors 						= false;
 	var Z1color 							= Graphics.COLOR_LT_GRAY;
 	var Z2color 							= Graphics.COLOR_YELLOW;
@@ -25,14 +24,11 @@ class ExtramemView extends DatarunpremiumView {
 	var disablelabel2 						= false;
 	var disablelabel3 						= false;
 	var disablelabel4 						= false;
-	var maxHR								= 999;
 	var kCalories							= 0;
 	hidden var tempeTemp 					= 0;
 	var utempunits							= false;
 	var valueAsclast						= 0;
 	var valueDesclast						= 0;
-	var Diff1 								= 0;
-	var Diff2 								= 0;
 	var utempcalibration					= 0;
 	var hrRest;
 	
@@ -48,12 +44,7 @@ class ExtramemView extends DatarunpremiumView {
 		disablelabel3 		= mApp.getProperty("pdisablelabel3");
 		disablelabel4 		= mApp.getProperty("pdisablelabel4");
 		utempcalibration 	= mApp.getProperty("pTempeCalibration");
-
-		var i; 
-		for (i = 1; i < 6; ++i) {
-			VertPace[i] = 0;
-		}
-		
+	
 		var uProfile = Toybox.UserProfile.getProfile();
 		hrRest = (uProfile.restingHeartRate != null) ? uProfile.restingHeartRate : 50;	
 		hrRest = stringOrNumber(hrRest);
@@ -90,28 +81,20 @@ class ExtramemView extends DatarunpremiumView {
         mRacesec = mRacesec.toNumber();
         mRacetime = mRacehour*3600 + mRacemin*60 + mRacesec;
         
-		//! Calculate vertical speed
+		//! Calculate ascent and descent
 		var valueDesc = (info.totalDescent != null) ? info.totalDescent : 0;
         valueDesc = (unitD == 1609.344) ? valueDesc*3.2808 : valueDesc;
-        Diff1 = valueDesc - valueDesclast;
 		var valueAsc = (info.totalAscent != null) ? info.totalAscent : 0;
         valueAsc = (unitD == 1609.344) ? valueAsc*3.2808 : valueAsc;
-        Diff2 = valueAsc - valueAsclast;
-        valueDesclast = valueDesc;
-        valueAsclast = valueAsc;
-        var CurrentVertSpeedinmpersec = Diff2-Diff1;
-		VertPace[5] 								= VertPace[4];
-		VertPace[4] 								= VertPace[3];
-		VertPace[3] 								= VertPace[2];
-        VertPace[2] 								= VertPace[1];
-        VertPace[1]								= CurrentVertSpeedinmpersec; 
-		var AverageVertspeedinmper5sec= (VertPace[1]+VertPace[2]+VertPace[3]+VertPace[4]+VertPace[5])/5;
 		
 		var sensorIter = getIterator();
-		maxHR = uHrZones[5];
 		var i = 0; 
 	    for (i = 1; i < 5; ++i) {
-	        if (metric[i] == 28) {
+	        if (metric[i] == 46) {
+	            fieldValue[i] = (info.currentHeartRate != null) ? info.currentHeartRate : 0;
+    	        fieldLabel[i] = "HR zone";
+        	    fieldFormat[i] = "1decimal";      
+        	} else if (metric[i] == 28) {
     	        fieldValue[i] = (LapHeartrate != 0) ? mLapSpeed*60/LapHeartrate : 0;
         	    fieldLabel[i] = "Lap EF";
             	fieldFormat[i] = "2decimal";
@@ -126,15 +109,11 @@ class ExtramemView extends DatarunpremiumView {
 			} else if (metric[i] == 32) {
 	            fieldValue[i] = (info.currentHeartRate != null && info.currentHeartRate != 0) ? mLapSpeed*60/info.currentHeartRate : 0;
     	        fieldLabel[i] = "Cur EF";
-        	    fieldFormat[i] = "2decimal";
-			} else if (metric[i] == 46) {
-	            fieldValue[i] = (info.currentHeartRate != null) ? info.currentHeartRate : 0;
-    	        fieldLabel[i] = "HR zone";
-        	    fieldFormat[i] = "1decimal";        	    
+        	    fieldFormat[i] = "2decimal";  	    
         	} else if (metric[i] == 54) {
     	        fieldValue[i] = (info.trainingEffect != null) ? info.trainingEffect : 0;
         	    fieldLabel[i] = "T effect";
-            	fieldFormat[i] = "2decimal";           	
+            	fieldFormat[i] = "2decimal";           	         	         	
 			} else if (metric[i] == 52) {
            		fieldValue[i] = valueAsc;
             	fieldLabel[i] = "EL gain";
@@ -142,31 +121,11 @@ class ExtramemView extends DatarunpremiumView {
         	}  else if (metric[i] == 53) {
            		fieldValue[i] = valueDesc;
             	fieldLabel[i] = "EL loss";
-            	fieldFormat[i] = "0decimal";           	
+            	fieldFormat[i] = "0decimal";   
         	}  else if (metric[i] == 62) {
            		fieldValue[i] = (info.currentSpeed != null) ? 3.6*((Pace1+Pace2+Pace3)/3)*1000/unitP : 0;
             	fieldLabel[i] = "Spd 3s";
             	fieldFormat[i] = "2decimal";           	
-        	}  else if (metric[i] == 67) {
-           		fieldValue[i] = (unitD == 1609.344) ? AverageVertspeedinmper5sec*3.2808 : AverageVertspeedinmper5sec;
-            	fieldLabel[i] = "V speed";
-            	fieldFormat[i] = "1decimal";
-            } else if (metric[i] == 83) {
-            	fieldValue[i] = (maxHR != 0) ? currentHR*100/maxHR : 0;
-            	fieldLabel[i] = "%MaxHR";
-            	fieldFormat[i] = "0decimal";   
-			} else if (metric[i] == 84) {
-    	        fieldValue[i] = (maxHR != 0) ? LapHeartrate*100/maxHR : 0;
-        	    fieldLabel[i] = "L %MaxHR";
-            	fieldFormat[i] = "0decimal";
-			} else if (metric[i] == 85) {
-        	    fieldValue[i] = (maxHR != 0) ? LastLapHeartrate*100/maxHR : 0;
-            	fieldLabel[i] = "LL %MaxHR";
-            	fieldFormat[i] = "0decimal";
-	        } else if (metric[i] == 86) {
-    	        fieldValue[i] = (maxHR != 0) ? AverageHeartrate*100/maxHR : 0;
-        	    fieldLabel[i] = "A %MaxHR";
-            	fieldFormat[i] = "0decimal";  
 			} else if (metric[i] == 88) {   
             	if (mLastLapSpeed == null or info.currentSpeed==0) {
             		fieldValue[i] = 0;
@@ -184,11 +143,11 @@ class ExtramemView extends DatarunpremiumView {
     	        fieldValue[i] = (utempunits == false) ? fieldValue[i] : fieldValue[i]*1.8+32;
         	    fieldLabel[i] = "Temp";
             	fieldFormat[i] = "1decimal";
-        	} else if (metric[i] == 105) {
+            } else if (metric[i] == 105) {
 	            fieldValue[i] = tempeTemp;
 	            fieldValue[i] = (utempunits == false) ? fieldValue[i]+utempcalibration : fieldValue[i]*1.8+32+utempcalibration;
     	        fieldLabel[i] = "Tempe T";
-    	        fieldFormat[i] = "0decimal";
+    	        fieldFormat[i] = "1decimal";
 			} 
 		}
 
