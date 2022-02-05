@@ -1,7 +1,6 @@
 <resources>
 
   <properties>
-    <property id="pAppversion" type="string">2.33</property>
     <property id="pUpperLeftMetric" type="number">0</property>
     <property id="pUpperRightMetric" type="number">4</property>    
     <property id="pBottomLeftMetric" type="number">20</property>
@@ -21,13 +20,12 @@
     <property id="pLapPwr4alerts" type="boolean">false</property>
     <property id="pCCnumber" type="number">9999999</property>
     <property id="pShowRedClock" type="boolean">false</property>
+    <property id="pCCnumber" type="number">9999999</property>
   </properties>
 
 	
   <strings>
-    <string id="AppName">Datarun premium with 4 metrics, copy 2 version</string>
-    <string id="AppVersion">2.33</string>
-    <string id="lDummysetting4version">Version 2.33 of Datarun premium with 4 metrics, copy 2 version (dummy setting)</string>
+    <string id="lDummysetting4version">Version 2.46 of Datarun premium with 4 metrics, copy 2 version (dummy setting)</string>
     <string id="lCCnumber">C-Code generated on the watch by the corresponding main Datarun premium datafield</string>
     <string id="lShowRedClock">Show red clock over all metrics before the start of an activity (useful for a race when the normal clock isn't visible)</string>
 	<string id="lTimeMenu">___Time items___</string>
@@ -108,10 +106,10 @@
     </setting>
     <setting propertyKey="@Properties.myNumber" title="@Strings.MyNumberTitle">
         <settingConfig type="numeric" errorMessage="@Strings.MyNumberError" />
-    </setting>  
+    </setting> 
     <setting propertyKey="@Properties.pCCnumber" title="@Strings.lCCnumber">
         <settingConfig type="numeric" errorMessage="@Strings.MyNumberError" />
-    </setting>
+    </setting> 
     <setting propertyKey="@Properties.pRoundedPace" title="@Strings.lRoundedPace">
       <settingConfig type="boolean" required="true" />
     </setting>

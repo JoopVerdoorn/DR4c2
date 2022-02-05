@@ -12,34 +12,31 @@ class DR4c2App extends Toybox.Application.AppBase {
 }
 
 class DatarunpremiumView extends Ui.DataField {
-	hidden var appversion = "1.00";
-
-	//!Get device info
-	var mySettings = System.getDeviceSettings();
-	hidden var ID0 = 999;
-	hidden var ID1 = 123;
-	hidden var ID2 = 456;
-	hidden var WatchID = mySettings.uniqueIdentifier;
-	hidden var watchType = mySettings.partNumber;
-	hidden var licenseOK = false;
-	hidden var CCode = 12345678;	
-	hidden var uMilClockAltern = 0;
-	hidden var uShowDemo = false;
-	hidden var umyNumber = 26429769;
+	var mySettings 							= System.getDeviceSettings();
+	hidden var ID0 							= 999;
+	hidden var ID1 							= 123;
+	hidden var ID2 							= 456;
+	hidden var WatchID 						= mySettings.uniqueIdentifier;
+	hidden var watchType 					= mySettings.partNumber;
+	hidden var licenseOK 					= false;
+	hidden var CCode 						= 12345678;	
+	hidden var uMilClockAltern 				= 0;
+	hidden var uShowDemo 					= false;
+	hidden var umyNumber 					= 26429769;
 	var uBlackBackground 					= false;	
-	hidden var mtest = 63869733;
-	hidden var jTimertime = 0;	
-	hidden var fieldValue = [1, 2, 3, 4, 5];
-	hidden var fieldLabel = [1, 2, 3, 4, 5];
-	hidden var fieldFormat = [1, 2, 3, 4, 5];	
-    var Averagespeedinmper3sec 			= 0;
-    var Averagespeedinmper5sec 			= 0;
+	hidden var mtest 						= 63869733;
+	hidden var jTimertime 					= 0;	
+	hidden var fieldValue 					= [1, 2, 3, 4, 5];
+	hidden var fieldLabel 					= [1, 2, 3, 4, 5];
+	hidden var fieldFormat 					= [1, 2, 3, 4, 5];	
+    var Averagespeedinmper3sec 				= 0;
+    var Averagespeedinmper5sec 				= 0;
     hidden var mColour;
     hidden var mColourFont;
 	hidden var mColourFont1;
     hidden var mColourLine;
     hidden var mColourBackGround;   
-    hidden var mLapTimerTime   = 0;
+    hidden var mLapTimerTime   				= 0;
 	hidden var mElapsedDistance				= 0;
     hidden var mTimerRunning                = false;	
     hidden var unitP                        = 1000.0;
@@ -108,7 +105,6 @@ class DatarunpremiumView extends Ui.DataField {
          uMilClockAltern	 = mApp.getProperty("pMilClockAltern");
          uRacedistance		 = mApp.getProperty("pRacedistance");
          uRacetime			 = mApp.getProperty("pRacetime");
-         appversion 		 = mApp.getProperty("pAppversion");
          uETAfromLap		 = mApp.getProperty("pETAfromLap");
          uShowRedClock 		 = mApp.getProperty("pShowRedClock");
          var uHrZones 		 = UserProfile.getHeartRateZones(UserProfile.getCurrentSport());
@@ -314,6 +310,8 @@ class DatarunpremiumView extends Ui.DataField {
         		fieldFormat[i] = "pace";
         		if (info.elapsedDistance != null and mRacetime != jTimertime and mRacetime > jTimertime) {
         			fieldValue[i] = (uRacedistance - info.elapsedDistance) / (mRacetime - jTimertime);
+        		} else {
+        			fieldValue[i] = uRacedistance / mRacetime;
         		} 
 	        } else if (metric[i] == 14) {
     	        fieldValue[i] = Math.round(mETA).toNumber();
