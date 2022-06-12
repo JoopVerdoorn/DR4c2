@@ -35,35 +35,31 @@ class DeviceView extends PowerView {
         //! Bottom horizontal divider
         dc.drawLine(33, 191, 185, 191);
 
-		//! Display GPS accuracy
-        dc.setColor(mGPScolor, Graphics.COLOR_TRANSPARENT);
-        dc.fillRectangle(9, 5, 60, 21); 
-		if (uMilClockAltern == 1) {
-		   dc.fillRectangle(160, 5, 50, 21);
-		} else {
-		   dc.fillRectangle(149, 5, 50, 21);
-		}
-
-        dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
-
+		//! Display metrics
+		dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
+ 		
 		//! Show clock with current time in top
 		var myTime = Toybox.System.getClockTime(); 
-    	var strTime = myTime.hour.format("%02d") + ":" + myTime.min.format("%02d"); 		
-		if (uMilClockAltern == 0) {
-		    dc.drawText(108, -2, Graphics.FONT_MEDIUM, strTime, Graphics.TEXT_JUSTIFY_CENTER);
-		}
-	
-		//! Display metrics
+    	var strTime = myTime.hour.format("%02d") + ":" + myTime.min.format("%02d");
+		dc.drawText(108, -4, Graphics.FONT_MEDIUM, strTime, Graphics.TEXT_JUSTIFY_CENTER);
+		
 		for (var i = 1; i < 5; ++i) {
 	    	if ( i == 1 ) {			//!upper row, left
-	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"059,077,065,005,089,066,038");
+	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"059,079,065,010,089,066,040");
 	       	} else if ( i == 2 ) {	//!upper row, right
-	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"162,077,170,111,089,153,038");
+	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"162,079,170,115,089,153,040");
 	       	} else if ( i == 3 ) {  //!lower row, left
-	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"059,137,065,006,147,066,179");
+	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"059,137,065,010,147,066,175");
 	       	} else if ( i == 4 ) {	//!lower row, right
-	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"162,137,170,111,147,153,179");
+	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"162,137,170,115,147,153,175");
 	       	}     	
+		}
+
+		if (jTimertime == 0) {
+	    	if (uShowRedClock == true) {
+		    	dc.setColor(Graphics.COLOR_RED, Graphics.COLOR_TRANSPARENT);
+				dc.drawText(109, 93, Graphics.FONT_MEDIUM, strTime, Graphics.TEXT_JUSTIFY_CENTER);
+		    }
 		}
 		
 		//! Bottom battery indicator

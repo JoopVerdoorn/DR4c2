@@ -64,11 +64,13 @@
     <property id="pCCnumber" type="number">9999999</property>
     <property id="pcadenceWorkaround" type="boolean">false</property>
     <property id="pVertgradeDist" type="number">100</property>
+    <property id="pLinecolor" type="number">1</property>
+    <property id="pAlertsinBackground" type="boolean">true</property>
   </properties>
 
 	
   <strings>
-    <string id="lDummysetting4version">Version 2.46 of Datarun premium with 4 metrics, copy 2 version (dummy setting)</string>
+    <string id="lDummysetting4version">Version 2.48e of Datarun premium with 4 metrics, copy 2 version (dummy setting)</string>
     <string id="lCCnumber">C-Code generated on the watch by the corresponding main Datarun premium datafield</string>
     <string id="lShowRedClock">Show red clock over all metrics before the start of an activity (useful for a race when the normal clock isn't visible)</string>
 	<string id="lTimeMenu">___Time items___</string>
@@ -160,6 +162,8 @@
     <string id="lFontalertRed">Red</string>
     <string id="lFontalertBlack">Black</string>  
     <string id="lFontalertDarkBlue">Dark blue</string>
+    <string id="lFontalertYellow">Yellow</string>
+    <string id="lFontalertOrange">Orange</string>
 	<string id="lPaceper3km">Pace averaged over the last 3 seconds</string>
 	<string id="lPaceper5km">Pace averaged over the last 5 seconds</string>
 	<string id="lPaceper300km">Pace averaged over the last .. seconds (max is 300 seconds)</string>
@@ -291,6 +295,18 @@
     <string id="lVertgrade">Vertical grade in percentages over a certain distance (any distance is allowed, see elsewhere in the settings, but maximum time observed is 5 minutes)</string>
     <string id="lVertgradeDist">Distance in kilometers for the calculation of vertical grade (any distance is allowed, but maximum time observed is 5 minutes)</string>
     <string id="lVertgradeDisterror">Invalid value</string>
+    <string id="lLinecolorGreen">Green</string>
+    <string id="lLinecolorBlue">Blue</string>
+    <string id="lLinecolorGray">Dark gray</string>
+    <string id="lLinecolorWhite">White</string>
+    <string id="lLinecolorPurple">Purple</string>
+    <string id="lLinecolorRed">Red</string>
+    <string id="lLinecolorBlack">Black</string>  
+    <string id="lLinecolorDarkBlue">Dark blue</string>
+    <string id="lLinecolorYellow">Yellow</string>
+    <string id="lLinecolorOrange">Orange</string>
+    <string id="lLinecolor">Color of the lines that separate the metrics</string>
+    <string id="lAlertsinBackground">Allow power vibration alerts when datafield is in the background</string>
   </strings>
 
   <settings>
@@ -300,8 +316,36 @@
   	<setting propertyKey="@Properties.pShowDemo" title="@Strings.lShowDemo">
       <settingConfig type="boolean" required="true" />
     </setting>
+    <setting propertyKey="@Properties.pLinecolor" title="@Strings.lLinecolor">
+      <settingConfig type="list" required="true">
+        <listEntry value="0">@Strings.lLinecolorGreen</listEntry>
+        <listEntry value="1">@Strings.lLinecolorBlue</listEntry>
+        <listEntry value="2">@Strings.lLinecolorGray</listEntry>
+        <listEntry value="3">@Strings.lLinecolorWhite</listEntry>
+        <listEntry value="4">@Strings.lLinecolorPurple</listEntry>
+        <listEntry value="5">@Strings.lLinecolorRed</listEntry>
+        <listEntry value="6">@Strings.lLinecolorBlack</listEntry>
+        <listEntry value="7">@Strings.lLinecolorDarkBlue</listEntry>
+        <listEntry value="8">@Strings.lLinecolorYellow</listEntry>
+        <listEntry value="9">@Strings.lLinecolorOrange</listEntry>
+      </settingConfig>
+    </setting>
     <setting propertyKey="@Properties.pBlackBackground" title="@Strings.lBlackBackground">
       <settingConfig type="boolean" required="true" />
+    </setting>
+    <setting propertyKey="@Properties.pLinecolor" title="@Strings.lLinecolor">
+      <settingConfig type="list" required="true">
+        <listEntry value="0">@Strings.lLinecolorGreen</listEntry>
+        <listEntry value="1">@Strings.lLinecolorBlue</listEntry>
+        <listEntry value="2">@Strings.lLinecolorGray</listEntry>
+        <listEntry value="3">@Strings.lLinecolorWhite</listEntry>
+        <listEntry value="4">@Strings.lLinecolorPurple</listEntry>
+        <listEntry value="5">@Strings.lLinecolorRed</listEntry>
+        <listEntry value="6">@Strings.lLinecolorBlack</listEntry>
+        <listEntry value="7">@Strings.lLinecolorDarkBlue</listEntry>
+        <listEntry value="8">@Strings.lLinecolorYellow</listEntry>
+        <listEntry value="9">@Strings.lLinecolorOrange</listEntry>
+      </settingConfig>
     </setting>
     <setting propertyKey="@Properties.pBacklight" title="@Strings.lBacklight">
       <settingConfig type="boolean" required="true" />
@@ -398,6 +442,9 @@
     <setting propertyKey="@Properties.pAlertbeep" title="@Strings.lAlertbeep">
       <settingConfig type="boolean" required="true" />
     </setting>
+    <setting propertyKey="@Properties.pAlertsinBackground" title="@Strings.lAlertsinBackground">
+      <settingConfig type="boolean" required="true" />
+    </setting>
     <setting propertyKey="@Properties.pLapPwr4alerts" title="@Strings.lLapPwr4alerts">
       <settingConfig type="list" required="true">
         <listEntry value="0">@Strings.lCurrentPoweralert</listEntry>
@@ -419,6 +466,8 @@
         <listEntry value="5">@Strings.lFontalertRed</listEntry>
         <listEntry value="6">@Strings.lFontalertBlack</listEntry>
         <listEntry value="7">@Strings.lFontalertDarkBlue</listEntry>
+        <listEntry value="8">@Strings.lFontalertYellow</listEntry>
+        <listEntry value="9">@Strings.lFontalertOrange</listEntry>
       </settingConfig>
     </setting>
     <setting propertyKey="@Properties.pFontalertColorHigh" title="@Strings.lFontalertColorHigh">
@@ -431,6 +480,8 @@
         <listEntry value="5">@Strings.lFontalertRed</listEntry>
         <listEntry value="6">@Strings.lFontalertBlack</listEntry>
         <listEntry value="7">@Strings.lFontalertDarkBlue</listEntry>
+        <listEntry value="8">@Strings.lFontalertYellow</listEntry>
+        <listEntry value="9">@Strings.lFontalertOrange</listEntry>
       </settingConfig>
     </setting>
     <setting propertyKey="@Properties.pVertgradeDist" title="@Strings.lVertgradeDist">

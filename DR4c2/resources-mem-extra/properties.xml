@@ -32,11 +32,12 @@
     <property id="pShowRedClock" type="boolean">false</property>
     <property id="pCCnumber" type="number">9999999</property>
     <property id="pcadenceWorkaround" type="boolean">false</property>
+    <property id="pLinecolor" type="number">1</property>
   </properties>
 
 	
   <strings>
-    <string id="lDummysetting4version">Version 2.44 of Datarun premium with 4 metrics, copy 2 version (dummy setting)</string>
+    <string id="lDummysetting4version">Version 2.48e of Datarun premium with 4 metrics, copy 2 version (dummy setting)</string>
     <string id="lCCnumber">C-Code generated on the watch by the corresponding main Datarun premium datafield</string>
     <string id="lShowRedClock">Show red clock over all metrics before the start of an activity (useful for a race when the normal clock isn't visible)</string>
 	<string id="lTimeMenu">___Time items___</string>
@@ -152,6 +153,17 @@
 	<string id="lVAM_min">Vertical speed averaged over the last 30 seconds (in meters/minute or feet/minute depending on watch settings)</string>
 	<string id="lElapsed">Elapsed time (actual time minus start of timer moment)</string>
 	<string id="lcadenceWorkaround">Apply workaround for bug in cadance metrics being halved (currently for Fenix 6 and FR945 LTE)</string>
+	<string id="lLinecolorGreen">Green</string>
+    <string id="lLinecolorBlue">Blue</string>
+    <string id="lLinecolorGray">Dark gray</string>
+    <string id="lLinecolorWhite">White</string>
+    <string id="lLinecolorPurple">Purple</string>
+    <string id="lLinecolorRed">Red</string>
+    <string id="lLinecolorBlack">Black</string>  
+    <string id="lLinecolorDarkBlue">Dark blue</string>
+    <string id="lLinecolorYellow">Yellow</string>
+    <string id="lLinecolorOrange">Orange</string>
+    <string id="lLinecolor">Color of the lines that separate the metrics</string>
  </strings>
 
   <settings>
@@ -163,6 +175,23 @@
     </setting>
     <setting propertyKey="@Properties.pBacklight" title="@Strings.lBacklight">
       <settingConfig type="boolean" required="true" />
+    </setting>
+    <setting propertyKey="@Properties.pBlackBackground" title="@Strings.lBlackBackground">
+      <settingConfig type="boolean" required="true" />
+    </setting>
+    <setting propertyKey="@Properties.pLinecolor" title="@Strings.lLinecolor">
+      <settingConfig type="list" required="true">
+        <listEntry value="0">@Strings.lLinecolorGreen</listEntry>
+        <listEntry value="1">@Strings.lLinecolorBlue</listEntry>
+        <listEntry value="2">@Strings.lLinecolorGray</listEntry>
+        <listEntry value="3">@Strings.lLinecolorWhite</listEntry>
+        <listEntry value="4">@Strings.lLinecolorPurple</listEntry>
+        <listEntry value="5">@Strings.lLinecolorRed</listEntry>
+        <listEntry value="6">@Strings.lLinecolorBlack</listEntry>
+        <listEntry value="7">@Strings.lLinecolorDarkBlue</listEntry>
+        <listEntry value="8">@Strings.lLinecolorYellow</listEntry>
+        <listEntry value="9">@Strings.lLinecolorOrange</listEntry>
+      </settingConfig>
     </setting>
     <setting propertyKey="@Properties.myNumber" title="@Strings.MyNumberTitle">
         <settingConfig type="numeric" errorMessage="@Strings.MyNumberError" />
@@ -198,9 +227,6 @@
         <listEntry value="2">@Strings.lShowlaps</listEntry>
         <listEntry value="3">@Strings.lShowmetric</listEntry>
       </settingConfig>
-    </setting>
-    <setting propertyKey="@Properties.pBlackBackground" title="@Strings.lBlackBackground">
-      <settingConfig type="boolean" required="true" />
     </setting>
     <setting propertyKey="@Properties.pETAfromLap" title="@Strings.lETAfromLap">
       <settingConfig type="boolean" required="true" />
