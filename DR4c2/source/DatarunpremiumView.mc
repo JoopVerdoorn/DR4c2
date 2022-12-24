@@ -26,18 +26,8 @@ class DR4c2App extends Toybox.Application.AppBase {
 
 class DatarunpremiumView extends Ui.DataField {
 	var mySettings 							= System.getDeviceSettings();
-	hidden var ID0 							= 999;
-	hidden var ID1 							= 123;
-	hidden var ID2 							= 456;
-	hidden var WatchID 						= mySettings.uniqueIdentifier;
-	hidden var watchType 					= mySettings.partNumber;
-	hidden var licenseOK 					= false;
-	hidden var CCode 						= 12345678;
 	hidden var uMilClockAltern 				= 0;
-	hidden var uShowDemo 					= false;
-	hidden var umyNumber 					= 26429769;
 	var uBlackBackground 					= false;
-	hidden var mtest 						= 63869733;
 	hidden var jTimertime 					= 0;	
 	hidden var fieldValue 					= [1, 2, 3, 4, 5];
 	hidden var fieldLabel 					= [1, 2, 3, 4, 5];
@@ -102,8 +92,6 @@ class DatarunpremiumView extends Ui.DataField {
 	hidden var AverageHeartrate 			= 0; 
 	hidden var mLapElapsedDistance 			= 0;
 	hidden var uShowRedClock 				= false;
-	hidden var ucadenceWorkaround 			= false;
-	hidden var c0Version					= false;
 
     function initialize() {
          DataField.initialize();
@@ -115,16 +103,12 @@ class DatarunpremiumView extends Ui.DataField {
          metric[4] 		 	 = mApp.getProperty("pBottomRightMetric");         
          uRoundedPace       = mApp.getProperty("pRoundedPace");
          uBacklight         = mApp.getProperty("pBacklight");
-         umyNumber			= mApp.getProperty("myNumber");
-         uShowDemo			= mApp.getProperty("pShowDemo");
          uMilClockAltern	= mApp.getProperty("pMilClockAltern");
          uRacedistance		= mApp.getProperty("pRacedistance");
          uRacetime			= mApp.getProperty("pRacetime");
          uETAfromLap		= mApp.getProperty("pETAfromLap");
          uShowRedClock 		= mApp.getProperty("pShowRedClock");
          var uHrZones 		= UserProfile.getHeartRateZones(UserProfile.getCurrentSport());
-         var uCCnumber 		= mApp.getProperty("pCCnumber");
-         ucadenceWorkaround = mApp.getProperty("pcadenceWorkaround"); 
           	 
         if (System.getDeviceSettings().paceUnits == System.UNIT_STATUTE) {
             unitP = 1609.344;
@@ -134,26 +118,7 @@ class DatarunpremiumView extends Ui.DataField {
             unitD = 1609.344;
         }
 		uRacedistance = (unitD/1000)*uRacedistance;
-		
-		//! Setting ID's for licensing and testing license
-		ID0 = watchType.substring(5, 9);
-		ID0 = 511+ID0.toNumber();
-		var mHash = hashfunction(WatchID);	
-		mHash = (mHash > 0) ? mHash : -mHash;
-		ID2 = Math.round(mHash / 315127)+329;
-		ID1 = mHash % 315127+1864;
-		mtest = ((ID2-329)*315127 + ID1-1864) % 74539;
-		mtest = (mtest < 1000) ? mtest + 80000 : mtest;
-        
-		CCode = hashfunction(umyNumber.toString())+496375;                
-		CCode = CCode*hashfunction((uHrZones[2]*uHrZones[4]+uHrZones[1]+uHrZones[3]).toString())-4943;
-        CCode = (CCode > 0) ? CCode : -CCode; 
-        CCode = CCode % 505344 + 51789; 
-        if (c0Version == true) {
-        	licenseOK = (umyNumber == mtest) ? true : false;
-        } else {
-        	licenseOK = (umyNumber == mtest or CCode == uCCnumber) ? true : false;
-        }
+
     }
 
     //! Timer transitions from stopped to running state
@@ -376,8 +341,7 @@ class DatarunpremiumView extends Ui.DataField {
         	    fieldFormat[i] = "0decimal";
 			} else if (metric[i] == 50) {
 				fieldValue[i] = (info.currentCadence != null) ? info.currentCadence : 0;
-				fieldValue[i] = (ucadenceWorkaround == true) ? fieldValue[i]*2 : fieldValue[i]; //! workaround multiply by two for FR945LTE and Fenix 6 series 
-    	        fieldLabel[i] = "Cadence";
+				fieldLabel[i] = "Cadence";
         	    fieldFormat[i] = "0decimal";
 			} else if (metric[i] == 51) {
 		  		fieldValue[i] = (info.altitude != null) ? info.altitude : 0;

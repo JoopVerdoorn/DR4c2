@@ -57,7 +57,8 @@ class CiqView extends DatarunpremiumView {
         var xh = CorString.substring(12, 15);
         var yh = CorString.substring(16, 19);
         var xl = CorString.substring(20, 23);
-		var yl = CorString.substring(24, 27);                  
+		var yl = CorString.substring(24, 27);  
+		var Watchtype = 1111;                
         x = x.toNumber();
         y = y.toNumber();
         xms = xms.toNumber();
@@ -65,6 +66,8 @@ class CiqView extends DatarunpremiumView {
         yh = yh.toNumber();
         xl = xl.toNumber();
         yl = yl.toNumber();
+        
+        Watchtype = watchType.substring(5, 9);
 
         if ( fieldformat.equals("0decimal" ) == true ) {
         	fieldvalue = fieldvalue.format("%.0f");        	
@@ -112,14 +115,14 @@ class CiqView extends DatarunpremiumView {
             		dc.drawText(xh, yh, Graphics.FONT_LARGE, fTimerHours, Graphics.TEXT_JUSTIFY_LEFT|Graphics.TEXT_JUSTIFY_VCENTER);
             		fTimer = (fieldvalue / 60 % 60).format("%02d") + ":" + fTimerSecs;  
         		}
-        		if ( ID0 == 3798 or ID0 == 4023 or ID0 == 3800 or ID0 == 4025 or ID0 == 4149) { //! Fenix 6(s) or Enduro
+        		if (Watchtype == 3287 or Watchtype == 3512 or Watchtype == 3289 or Watchtype == 3514 or Watchtype == 3638) { //! Fenix 6(s) or Enduro
         			dc.drawText(xx, y, Graphics.FONT_NUMBER_MILD, fTimer, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
         		} else {	
         			dc.drawText(xx, y, Graphics.FONT_NUMBER_MEDIUM, fTimer, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
         		}
         	}
         } else {
-        	if ( ID0 == 3798 or ID0 == 4023 or ID0 == 3800 or ID0 == 4025 or ID0 == 4149) { //! Fenix 6(s)  or Enduro
+        	if (Watchtype == 3287 or Watchtype == 3512 or Watchtype == 3289 or Watchtype == 3514 or Watchtype == 3638) { //! Fenix 6(s)  or Enduro
         		dc.drawText(x, y, Graphics.FONT_NUMBER_MEDIUM, fieldvalue, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
         	} else {
         		dc.drawText(x, y, Graphics.FONT_NUMBER_HOT, fieldvalue, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);

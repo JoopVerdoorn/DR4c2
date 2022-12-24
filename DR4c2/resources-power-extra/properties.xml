@@ -20,8 +20,6 @@
     <property id="pRoundedPace" type="boolean">true</property>
     <property id="pBlackBackground" type="boolean">false</property>
     <property id="pBacklight" type="boolean">false</property>
-    <property id="myNumber" type="number">12345678</property>
-    <property id="pShowDemo" type="boolean">false</property>
     <property id="pDummysetting4version" type="boolean">true</property>
     <property id="pRequiredPower" type="string">000:999</property>
     <property id="pWarningFreq" type="number">5</property>
@@ -57,12 +55,9 @@
     <property id="pRealAltitude" type="number">200</property>
     <property id="pFTPAltitude" type="number">200</property>
     <property id="poverruleWourkout" type="boolean">false</property>
-    <property id="pCCnumber" type="number">9999999</property>
     <property id="pFontalertColorLow" type="number">5</property>
     <property id="pFontalertColorHigh" type="number">4</property>
     <property id="pShowRedClock" type="boolean">false</property>
-    <property id="pCCnumber" type="number">9999999</property>
-    <property id="pcadenceWorkaround" type="boolean">false</property>
     <property id="pVertgradeDist" type="number">100</property>
     <property id="pLinecolor" type="number">1</property>
     <property id="pAlertsinBackground" type="boolean">true</property>
@@ -70,8 +65,7 @@
 
 	
   <strings>
-    <string id="lDummysetting4version">Version 2.48f of Datarun premium with 4 metrics, copy 2 version (dummy setting)</string>
-    <string id="lCCnumber">C-Code generated on the watch by the corresponding main Datarun premium datafield</string>
+    <string id="lDummysetting4version">Version 2.50 of Datarun premium with 4 metrics, copy 2 version (dummy setting)</string>
     <string id="lShowRedClock">Show red clock over all metrics before the start of an activity (useful for a race when the normal clock isn't visible)</string>
 	<string id="lTimeMenu">___Time items___</string>
 	<string id="lDistanceMenu">___Distance items___</string>
@@ -116,7 +110,6 @@
     <string id="lRoundedPace">Show current pace as Rounded Pace</string>
     <string id="lMaxColoringPace">Use 5 colors for coloring of pace field in middle row, instead of 3 colors</string>
     <string id="lColoringPaceFromAver">Use average pace for coloring of the pace field in middle row, instead of pace based on desired finish time</string>
-    <string id="lShowDemo">Show demo view for ID's and check license</string>
     <string id="lBlackBackground">Use black background instead of white</string>
     <string id="lBacklight">Force backlight on, regardless of device settings</string>
     <string id="lMilClockAltern">Alternative for default military clock in upper field</string>
@@ -124,8 +117,6 @@
     <string id="lShowlaps">Show number of laps </string>
     <string id="lShowAMPM">Show clock with AM or PM instead of military time </string>
     <string id="lShowmetric">Show metric </string>
-    <string id="MyNumberTitle">Enter license key</string>
-    <string id="MyNumberError">Not valid, only numbers allowed!</string> 
     <string id="lRacedistanceTitle">Enter race distance in meters or thousands of a mile (imperial/statute watch settings) for estimated finish time</string>
     <string id="lRacedistanceError">Not valid, only numbers allowed!</string>
     <string id="lRacetimeTitle">Enter desired finish time for estimated deviation of finish time (format like 03:59:00 required!)</string>
@@ -291,7 +282,6 @@
     <string id="lTotalAscentinmpermin">Vertical ascent averaged over the whole activity (in meters/minute or feet/minute depending on watch settings)</string>
     <string id="lTotalAscentinmperhour">Vertical ascent averaged over the whole activity (in meters/hour or feet/hour depending on watch settings)</string>
     <string id="lElapsed">Elapsed time (actual time minus start of timer moment)</string>
-    <string id="lcadenceWorkaround">Apply workaround for bug in cadance metrics being halved (currently for Fenix 6 and FR945 LTE)</string> 
     <string id="lVertgrade">Vertical grade in percentages over a certain distance (any distance is allowed, see elsewhere in the settings, but maximum time observed is 5 minutes)</string>
     <string id="lVertgradeDist">Distance in kilometers for the calculation of vertical grade (any distance is allowed, but maximum time observed is 5 minutes)</string>
     <string id="lVertgradeDisterror">Invalid value</string>
@@ -307,13 +297,14 @@
     <string id="lLinecolorOrange">Orange</string>
     <string id="lLinecolor">Color of the lines that separate the metrics</string>
     <string id="lAlertsinBackground">Allow power vibration alerts when datafield is in the background</string>
+    <string id="lLastLapMaxHR">Maximum/highest heartrate during last lap</string>
+    <string id="lLastLapMinHR">Minimum/lowest heartrate during last lap</string>
+    <string id="lLastLapMaxPwr">Maximum/highest power during last lap</string>
+    <string id="lLastLapMinPwr">Minimum/lowest power during last lap</string>
   </strings>
 
   <settings>
   	<setting propertyKey="@Properties.pDummysetting4version" title="@Strings.lDummysetting4version">
-      <settingConfig type="boolean" required="true" />
-    </setting>  	
-  	<setting propertyKey="@Properties.pShowDemo" title="@Strings.lShowDemo">
       <settingConfig type="boolean" required="true" />
     </setting>
     <setting propertyKey="@Properties.pLinecolor" title="@Strings.lLinecolor">
@@ -349,12 +340,6 @@
     </setting>
     <setting propertyKey="@Properties.pBacklight" title="@Strings.lBacklight">
       <settingConfig type="boolean" required="true" />
-    </setting>
-    <setting propertyKey="@Properties.myNumber" title="@Strings.MyNumberTitle">
-        <settingConfig type="numeric" errorMessage="@Strings.MyNumberError" />
-    </setting>
-    <setting propertyKey="@Properties.pCCnumber" title="@Strings.lCCnumber">
-        <settingConfig type="numeric" errorMessage="@Strings.MyNumberError" />
     </setting>
     <setting propertyKey="@Properties.pRoundedPace" title="@Strings.lRoundedPace">
       <settingConfig type="boolean" required="true" />
@@ -502,9 +487,6 @@
     <setting propertyKey="@Properties.pShowRedClock" title="@Strings.lShowRedClock">
       <settingConfig type="boolean" required="false" />
     </setting>
-    <setting propertyKey="@Properties.pcadenceWorkaround" title="@Strings.lcadenceWorkaround">
-      <settingConfig type="boolean" required="true" />
-    </setting>
     <setting propertyKey="@Properties.pMilClockAltern" title="@Strings.lMilClockAltern">
       <settingConfig type="list" required="true">
         <listEntry value="0">@Strings.lShowMilClock</listEntry>
@@ -575,6 +557,8 @@
         <listEntry value="47">@Strings.lLapHeartrate</listEntry>
         <listEntry value="48">@Strings.lLLHeartrate</listEntry>
         <listEntry value="49">@Strings.lAveraHeartrate</listEntry>
+         <listEntry value="132">@Strings.lLastLapMaxHR</listEntry>
+        <listEntry value="133">@Strings.lLastLapMinHR</listEntry>
         <listEntry value="83">@Strings.lpercMaxHR</listEntry>
         <listEntry value="84">@Strings.lLpercMaxHR</listEntry>
         <listEntry value="85">@Strings.lLLpercMaxHR</listEntry>
@@ -599,6 +583,8 @@
         <listEntry value="24">@Strings.lAPower</listEntry>
         <listEntry value="104">@Strings.lAverPowerzone</listEntry>
         <listEntry value="80">@Strings.lMaxPwr</listEntry>
+        <listEntry value="134">@Strings.lLastLapMaxPwr</listEntry>
+        <listEntry value="135">@Strings.lLastLapMinPwr</listEntry>
         <listEntry value="71">@Strings.lpercFTP</listEntry>
         <listEntry value="73">@Strings.lLpercFTP</listEntry>
         <listEntry value="74">@Strings.lLLpercFTP</listEntry>
@@ -720,6 +706,8 @@
         <listEntry value="47">@Strings.lLapHeartrate</listEntry>
         <listEntry value="48">@Strings.lLLHeartrate</listEntry>
         <listEntry value="49">@Strings.lAveraHeartrate</listEntry>
+         <listEntry value="132">@Strings.lLastLapMaxHR</listEntry>
+        <listEntry value="133">@Strings.lLastLapMinHR</listEntry>
         <listEntry value="83">@Strings.lpercMaxHR</listEntry>
         <listEntry value="84">@Strings.lLpercMaxHR</listEntry>
         <listEntry value="85">@Strings.lLLpercMaxHR</listEntry>
@@ -744,6 +732,8 @@
         <listEntry value="24">@Strings.lAPower</listEntry>
         <listEntry value="104">@Strings.lAverPowerzone</listEntry>
         <listEntry value="80">@Strings.lMaxPwr</listEntry>
+        <listEntry value="134">@Strings.lLastLapMaxPwr</listEntry>
+        <listEntry value="135">@Strings.lLastLapMinPwr</listEntry>
         <listEntry value="71">@Strings.lpercFTP</listEntry>
         <listEntry value="73">@Strings.lLpercFTP</listEntry>
         <listEntry value="74">@Strings.lLLpercFTP</listEntry>
@@ -866,6 +856,8 @@
         <listEntry value="47">@Strings.lLapHeartrate</listEntry>
         <listEntry value="48">@Strings.lLLHeartrate</listEntry>
         <listEntry value="49">@Strings.lAveraHeartrate</listEntry>
+         <listEntry value="132">@Strings.lLastLapMaxHR</listEntry>
+        <listEntry value="133">@Strings.lLastLapMinHR</listEntry>
         <listEntry value="83">@Strings.lpercMaxHR</listEntry>
         <listEntry value="84">@Strings.lLpercMaxHR</listEntry>
         <listEntry value="85">@Strings.lLLpercMaxHR</listEntry>
@@ -890,6 +882,8 @@
         <listEntry value="24">@Strings.lAPower</listEntry>
         <listEntry value="104">@Strings.lAverPowerzone</listEntry>
         <listEntry value="80">@Strings.lMaxPwr</listEntry>
+        <listEntry value="134">@Strings.lLastLapMaxPwr</listEntry>
+        <listEntry value="135">@Strings.lLastLapMinPwr</listEntry>
         <listEntry value="71">@Strings.lpercFTP</listEntry>
         <listEntry value="73">@Strings.lLpercFTP</listEntry>
         <listEntry value="74">@Strings.lLLpercFTP</listEntry>
@@ -1011,6 +1005,8 @@
         <listEntry value="47">@Strings.lLapHeartrate</listEntry>
         <listEntry value="48">@Strings.lLLHeartrate</listEntry>
         <listEntry value="49">@Strings.lAveraHeartrate</listEntry>
+         <listEntry value="132">@Strings.lLastLapMaxHR</listEntry>
+        <listEntry value="133">@Strings.lLastLapMinHR</listEntry>
         <listEntry value="83">@Strings.lpercMaxHR</listEntry>
         <listEntry value="84">@Strings.lLpercMaxHR</listEntry>
         <listEntry value="85">@Strings.lLLpercMaxHR</listEntry>
@@ -1035,6 +1031,8 @@
         <listEntry value="24">@Strings.lAPower</listEntry>
         <listEntry value="104">@Strings.lAverPowerzone</listEntry>
         <listEntry value="80">@Strings.lMaxPwr</listEntry>
+        <listEntry value="134">@Strings.lLastLapMaxPwr</listEntry>
+        <listEntry value="135">@Strings.lLastLapMinPwr</listEntry>
         <listEntry value="71">@Strings.lpercFTP</listEntry>
         <listEntry value="73">@Strings.lLpercFTP</listEntry>
         <listEntry value="74">@Strings.lLLpercFTP</listEntry>
@@ -1139,6 +1137,8 @@
         <listEntry value="47">@Strings.lLapHeartrate</listEntry>
         <listEntry value="48">@Strings.lLLHeartrate</listEntry>
         <listEntry value="49">@Strings.lAveraHeartrate</listEntry>
+         <listEntry value="132">@Strings.lLastLapMaxHR</listEntry>
+        <listEntry value="133">@Strings.lLastLapMinHR</listEntry>
         <listEntry value="83">@Strings.lpercMaxHR</listEntry>
         <listEntry value="84">@Strings.lLpercMaxHR</listEntry>
         <listEntry value="85">@Strings.lLLpercMaxHR</listEntry>

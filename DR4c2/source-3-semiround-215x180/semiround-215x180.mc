@@ -14,16 +14,6 @@ class DeviceView extends PowerView {
 	function onUpdate(dc) {
 		//! call the parent function in order to execute the logic of the parent
 		PowerView.onUpdate(dc);
-        
-		//! Conditions for showing the demoscreen       
-        if (uShowDemo == false) {
-        	if (licenseOK == false && jTimertime > 900)  {
-        		uShowDemo = true;        		
-        	}
-        }
-
-	   //! Check whether demoscreen is showed or the metrics 
-	   if (uShowDemo == false ) {
 
 	//! Draw separator lines
         dc.setColor(mColourLine, Graphics.COLOR_TRANSPARENT);
@@ -68,30 +58,6 @@ class DeviceView extends PowerView {
 		var Startstatuspwrbr = 84 + pwr*0.5  ;
 		var Endstatuspwrbr = 46 - pwr*0.5 ;
 		dc.fillRectangle(Startstatuspwrbr, 165, Endstatuspwrbr, 10);
-
-	   } else {
-	   //! Display demo screen
-		dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
-	
-		if (licenseOK == true) {
-      		dc.drawText(109, 100, Graphics.FONT_MEDIUM, "Registered !!", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
-			dc.drawText(74, 125, Graphics.FONT_XTINY, "License code: ", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
-			dc.drawText(164, 125, Graphics.FONT_XTINY, mtest, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);	
-			if (c0Version == true) {
-				dc.drawText(81, 150, Graphics.FONT_XTINY, "C-Code: ", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
-				dc.drawText(140, 150, Graphics.FONT_XTINY, CCode, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
-			}
-		} else {
-      		dc.drawText(109, 15, Graphics.FONT_XTINY, "License needed !!", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
-      		dc.drawText(109, 37, Graphics.FONT_XTINY, "Run is recorded though", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
-			dc.drawText(55, 75, Graphics.FONT_MEDIUM, "ID 0: ", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
-			dc.drawText(146, 69, Graphics.FONT_NUMBER_MEDIUM, ID0, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
-			dc.drawText(55, 112, Graphics.FONT_MEDIUM, "ID 1: " , Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
-			dc.drawText(146, 105, Graphics.FONT_NUMBER_MEDIUM, ID1, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
-			dc.drawText(55, 148, Graphics.FONT_MEDIUM, "ID 2: " , Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
-			dc.drawText(146, 142, Graphics.FONT_NUMBER_MEDIUM, ID2, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
-      	}
-	   }
 	   
 	}
 

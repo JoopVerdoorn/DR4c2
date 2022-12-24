@@ -8,8 +8,8 @@ class CiqView extends ExtramemView {
 	
     function initialize() {
         ExtramemView.initialize();	
-        Garminfont = (ID0 == 3588) ? Ui.loadResource(Rez.Fonts.Garmin1) : Graphics.FONT_NUMBER_HOT;
-        Garminfontklein = (ID0 == 3588) ? Ui.loadResource(Rez.Fonts.Garmin2) : Graphics.FONT_NUMBER_MEDIUM;	
+        Garminfont = (Watchtype == 3077) ? Ui.loadResource(Rez.Fonts.Garmin1) : Graphics.FONT_NUMBER_HOT;
+        Garminfontklein = (Watchtype == 3077) ? Ui.loadResource(Rez.Fonts.Garmin2) : Graphics.FONT_NUMBER_MEDIUM;	
     }
 
 
@@ -33,11 +33,7 @@ class CiqView extends ExtramemView {
            	
            	//!Calculate lapCadence
             mCadenceTime	 = (info.currentCadence != null) ? mCadenceTime+1 : mCadenceTime;
-            if (ucadenceWorkaround == true ) { //! workaround multiply by two for FR945LTE and Fenix 6 series
-            	mElapsedCadence= (info.currentCadence != null) ? mElapsedCadence + info.currentCadence*2 : mElapsedCadence;
-            } else {
-            	mElapsedCadence= (info.currentCadence != null) ? mElapsedCadence + info.currentCadence : mElapsedCadence;
-            }
+            mElapsedCadence= (info.currentCadence != null) ? mElapsedCadence + info.currentCadence : mElapsedCadence;
 
             //! Calculate vertical speed
     	    valueDesc = (info.totalDescent != null) ? info.totalDescent : 0;
