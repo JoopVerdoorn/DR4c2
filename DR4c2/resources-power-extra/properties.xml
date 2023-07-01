@@ -65,7 +65,7 @@
 
 	
   <strings>
-    <string id="lDummysetting4version">Version 2.50 of Datarun premium with 4 metrics, copy 2 version (dummy setting)</string>
+    <string id="lDummysetting4version">Version 2.50b of Datarun premium with 4 metrics, copy 2 version (dummy setting)</string>
     <string id="lShowRedClock">Show red clock over all metrics before the start of an activity (useful for a race when the normal clock isn't visible)</string>
 	<string id="lTimeMenu">___Time items___</string>
 	<string id="lDistanceMenu">___Distance items___</string>

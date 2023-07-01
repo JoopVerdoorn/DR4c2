@@ -8,8 +8,8 @@ class CiqView extends ExtramemView {
 	
     function initialize() {
         ExtramemView.initialize();	
-        Garminfont = (Watchtype == 3077) ? Ui.loadResource(Rez.Fonts.Garmin1) : Graphics.FONT_NUMBER_HOT;
-        Garminfontklein = (Watchtype == 3077) ? Ui.loadResource(Rez.Fonts.Garmin2) : Graphics.FONT_NUMBER_MEDIUM;	
+        Garminfont = (Watchtype == 3077 or Watchtype == 1111) ? Ui.loadResource(Rez.Fonts.Garmin1) : Graphics.FONT_NUMBER_HOT;
+        Garminfontklein = (Watchtype == 3077 or Watchtype == 1111) ? Ui.loadResource(Rez.Fonts.Garmin2) : Graphics.FONT_NUMBER_MEDIUM;	
     }
 
 
